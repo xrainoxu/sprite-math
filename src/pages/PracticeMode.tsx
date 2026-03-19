@@ -96,6 +96,18 @@ export function PracticeMode() {
   if (gameState === 'select') {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8">
+        {/* 退出按钮 */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/')}
+          className="absolute left-4 top-4 rounded-full bg-white/20 px-4 py-2 text-white backdrop-blur-sm hover:bg-white/30"
+        >
+          ← 退出
+        </motion.button>
+
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
