@@ -34,7 +34,7 @@ export function TimedMode() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => navigate('/')}
-        className="absolute left-4 top-4 rounded-full bg-indigo-100 px-4 py-2 text-indigo-600 shadow-md hover:bg-indigo-200"
+        className="absolute left-4 top-4 rounded-full bg-amber-200 px-4 py-2 text-amber-800 shadow-md hover:bg-amber-300"
       >
         ← 退出
       </motion.button>
@@ -44,11 +44,11 @@ export function TimedMode() {
         animate={{ scale: 1, opacity: 1 }}
         className="text-center"
       >
-        <h1 className="mb-4 text-5xl font-bold text-indigo-600">
+        <h1 className="mb-4 text-5xl font-bold text-amber-800">
           <Icon icon="mdi:timer-sand" className="mr-2 vertical-align: middle" />
           计时挑战
         </h1>
-        <p className="mb-4 text-xl text-indigo-500">
+        <p className="mb-4 text-xl text-amber-700">
           选择时长，完成尽可能多的题目！
         </p>
 
@@ -60,10 +60,10 @@ export function TimedMode() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedDuration(option.seconds)}
-              className={`rounded-2xl px-6 py-3 text-lg font-bold shadow-lg transition-all ${
+              className={`rounded-2xl border-2 px-6 py-3 text-lg font-bold shadow-lg transition-all ${
                 selectedDuration === option.seconds
-                  ? 'bg-indigo-500 text-white'
-                  : 'bg-white text-indigo-600 hover:bg-indigo-50'
+                  ? 'border-amber-400 bg-gradient-to-r from-amber-400 to-orange-400 text-white'
+                  : 'border-amber-300 bg-white text-amber-800 hover:bg-amber-50'
               }`}
             >
               {option.label}
@@ -71,8 +71,8 @@ export function TimedMode() {
           ))}
         </div>
 
-        <div className="mb-8 rounded-2xl bg-amber-100 p-6 shadow-md">
-          <p className="text-lg text-amber-700">
+        <div className="mb-8 rounded-2xl bg-amber-100/80 border-2 border-amber-300 p-6 shadow-md">
+          <p className="text-lg text-amber-900">
             <Icon icon="mdi:trophy" className="mr-2 vertical-align: middle" />
             最高分: <span className="font-bold">{highScore}</span>
           </p>
@@ -81,7 +81,7 @@ export function TimedMode() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
-          className="rounded-full bg-indigo-500 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:bg-indigo-600"
+          className="rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:from-amber-500 hover:to-orange-500"
         >
           开始挑战
         </motion.button>

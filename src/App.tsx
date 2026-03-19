@@ -5,6 +5,7 @@ import { TimedPlay } from './pages/TimedPlay';
 import { ChallengeMode } from './pages/ChallengeMode';
 import { ChallengePlay } from './pages/ChallengePlay';
 import { PracticeMode } from './pages/PracticeMode';
+import { PracticePlay } from './pages/PracticePlay';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/challenge" element={<ChallengeMode />} />
         <Route path="/challenge/play" element={<ChallengePlay />} />
         <Route path="/practice" element={<PracticeMode />} />
+        <Route path="/practice/play" element={<PracticePlay />} />
       </Routes>
     </HashRouter>
   );
