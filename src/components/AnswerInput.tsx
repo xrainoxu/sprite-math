@@ -1,0 +1,70 @@
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import type { Question } from '../utils/math';
+
+interface AnswerInputProps {
+  question: Question;
+  onAnswer: (answer: number | string) => void;
+  disabled?: boolean;
+}
+
+export function AnswerInput({ question, onAnswer, disabled }: AnswerInputProps) {
+  const [value, setValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 自动聚焦输入框（仅对加减法）
+  useEffect(() => {
+    if (!disabled && question.type !== 'comparison') {
+      inputRef.current?.focus();
+    }
+  }, [question.id, disabled, question.type]);
+
+  // 题目类型变化时清空输入
+  useEffect(() => {
+    setValue('');
+  }, [question.id]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (value.trim() && !disabled) {
+      onAnswer(value.trim());
+      setValue('');
+    }
+  };
+
+  // 大小判断题在 QuestionCard 中已经显示了圆形按钮，这里不需要再显示
+  if (question.type === 'comparison') {
+    return null;
+  }
+
+  // 数字输入框（加减法）
+  return (
+    <motion.form
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      onSubmit={handleSubmit}
+      className="mt-2 flex justify-center md:mt-3 lg:mt-4"
+    >
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="number"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={disabled}
+          placeholder="?"
+          className="h-16 w-32 rounded-2xl border-4 border-white bg-white/90 px-4 text-center text-4xl font-bold text-indigo-600 shadow-xl placeholder:text-indigo-300 focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-300/50 disabled:cursor-not-allowed disabled:bg-gray-200 md:h-20 md:w-40 md:text-5xl lg:h-24 lg:w-48 lg:text-6xl"
+        />
+        <motion.button
+          type="submit"
+          disabled={disabled || !value.trim()}
+          whileHover={{ scale: disabled || !value.trim() ? 1 : 1.05 }}
+          whileTap={{ scale: disabled || !value.trim() ? 1 : 0.95 }}
+          className="mt-2 flex w-full justify-center rounded-xl bg-indigo-600 px-4 py-2 text-base font-bold text-white shadow-lg transition-all hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-400 md:mt-3 md:px-6 md:py-3 md:text-lg lg:mt-4 lg:px-8 lg:py-4 lg:text-xl"
+        >
+          提交答案
+        </motion.button>
+      </div>
+    </motion.form>
+  );
+}
