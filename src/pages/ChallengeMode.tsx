@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Icon } from '../components/Icon';
 
 const MAX_HEALTH = 3;
 const MAX_ENERGY = 100;
@@ -20,7 +21,7 @@ export function ChallengeMode() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => navigate('/')}
-        className="absolute left-4 top-4 rounded-full bg-white/20 px-4 py-2 text-white backdrop-blur-sm hover:bg-white/30"
+        className="absolute left-4 top-4 rounded-full bg-violet-100 px-4 py-2 text-violet-600 shadow-md hover:bg-violet-200"
       >
         ← 退出
       </motion.button>
@@ -30,23 +31,28 @@ export function ChallengeMode() {
         animate={{ scale: 1, opacity: 1 }}
         className="text-center"
       >
-        <h1 className="mb-4 text-5xl font-bold text-white">🏆 闯关模式</h1>
-        <p className="mb-8 text-xl text-white/80">
+        <h1 className="mb-4 text-5xl font-bold text-violet-600">
+          <Icon icon="mdi:trophy" className="mr-2 vertical-align: middle" />
+          闯关模式
+        </h1>
+        <p className="mb-8 text-xl text-violet-500">
           答对积累能量，答错扣血！坚持到最后！
         </p>
-        <div className="mb-8 space-y-4 rounded-2xl bg-white/20 p-6 backdrop-blur-sm">
-          <p className="text-lg text-white">
-            ❤️ 生命值: <span className="font-bold">{MAX_HEALTH}</span>
+        <div className="mb-8 space-y-4 rounded-2xl bg-violet-100 p-6 shadow-md">
+          <p className="text-lg text-violet-700">
+            <Icon icon="mdi:heart" className="mr-2 vertical-align: middle" />
+            生命值: <span className="font-bold">{MAX_HEALTH}</span>
           </p>
-          <p className="text-lg text-white">
-            ⚡ 能量满: <span className="font-bold">{MAX_ENERGY}%</span> 升级
+          <p className="text-lg text-violet-700">
+            <Icon icon="mdi:lightning-bolt" className="mr-2 vertical-align: middle" />
+            能量满: <span className="font-bold">{MAX_ENERGY}%</span> 升级
           </p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
-          className="rounded-full bg-white px-12 py-4 text-xl font-bold text-indigo-600 shadow-xl transition-all hover:bg-indigo-50"
+          className="rounded-full bg-violet-500 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:bg-violet-600"
         >
           开始闯关
         </motion.button>

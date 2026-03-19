@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getStats } from '../utils/storage';
+import { Icon } from '../components/Icon';
 
 const TIME_OPTIONS = [
   { seconds: 60, label: '1分钟' },
@@ -33,7 +34,7 @@ export function TimedMode() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => navigate('/')}
-        className="absolute left-4 top-4 rounded-full bg-white/20 px-4 py-2 text-white backdrop-blur-sm hover:bg-white/30"
+        className="absolute left-4 top-4 rounded-full bg-indigo-100 px-4 py-2 text-indigo-600 shadow-md hover:bg-indigo-200"
       >
         ← 退出
       </motion.button>
@@ -43,8 +44,11 @@ export function TimedMode() {
         animate={{ scale: 1, opacity: 1 }}
         className="text-center"
       >
-        <h1 className="mb-4 text-5xl font-bold text-white">⏱️ 计时挑战</h1>
-        <p className="mb-4 text-xl text-white/80">
+        <h1 className="mb-4 text-5xl font-bold text-indigo-600">
+          <Icon icon="mdi:timer-sand" className="mr-2 vertical-align: middle" />
+          计时挑战
+        </h1>
+        <p className="mb-4 text-xl text-indigo-500">
           选择时长，完成尽可能多的题目！
         </p>
 
@@ -58,8 +62,8 @@ export function TimedMode() {
               onClick={() => setSelectedDuration(option.seconds)}
               className={`rounded-2xl px-6 py-3 text-lg font-bold shadow-lg transition-all ${
                 selectedDuration === option.seconds
-                  ? 'bg-white text-indigo-600'
-                  : 'bg-white/20 text-white hover:bg-white/30'
+                  ? 'bg-indigo-500 text-white'
+                  : 'bg-white text-indigo-600 hover:bg-indigo-50'
               }`}
             >
               {option.label}
@@ -67,16 +71,17 @@ export function TimedMode() {
           ))}
         </div>
 
-        <div className="mb-8 rounded-2xl bg-white/20 p-6 backdrop-blur-sm">
-          <p className="text-lg text-white">
-            🏆 最高分: <span className="font-bold">{highScore}</span>
+        <div className="mb-8 rounded-2xl bg-amber-100 p-6 shadow-md">
+          <p className="text-lg text-amber-700">
+            <Icon icon="mdi:trophy" className="mr-2 vertical-align: middle" />
+            最高分: <span className="font-bold">{highScore}</span>
           </p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
-          className="rounded-full bg-white px-12 py-4 text-xl font-bold text-indigo-600 shadow-xl transition-all hover:bg-indigo-50"
+          className="rounded-full bg-indigo-500 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:bg-indigo-600"
         >
           开始挑战
         </motion.button>

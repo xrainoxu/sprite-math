@@ -1,5 +1,6 @@
 import type { Question } from '../utils/math';
 import { motion } from 'framer-motion';
+import { Icon } from './Icon';
 
 interface QuestionCardProps {
   question: Question;
@@ -16,29 +17,43 @@ export function QuestionCard({
   selectedAnswer,
   onSelectAnswer,
 }: QuestionCardProps) {
+  // 卡通明亮配色
   const getTypeColor = () => {
     switch (question.type) {
       case 'addition':
-        return 'from-green-400 to-emerald-600';
+        return 'from-emerald-300 to-teal-500';
       case 'subtraction':
-        return 'from-blue-400 to-indigo-600';
+        return 'from-sky-300 to-blue-500';
       case 'comparison':
-        return 'from-purple-400 to-pink-600';
+        return 'from-violet-300 to-fuchsia-500';
       default:
-        return 'from-gray-400 to-gray-600';
+        return 'from-slate-300 to-slate-500';
+    }
+  };
+
+  const getTypeIcon = () => {
+    switch (question.type) {
+      case 'addition':
+        return 'mdi:plus';
+      case 'subtraction':
+        return 'mdi:minus';
+      case 'comparison':
+        return 'mdi:scale-balance';
+      default:
+        return 'mdi:help';
     }
   };
 
   const getTypeLabel = () => {
     switch (question.type) {
       case 'addition':
-        return '➕ 加法';
+        return '加法';
       case 'subtraction':
-        return '➖ 减法';
+        return '减法';
       case 'comparison':
-        return '⚖️ 大小判断';
+        return '大小判断';
       default:
-        return '❓';
+        return '题目';
     }
   };
 
@@ -131,7 +146,8 @@ export function QuestionCard({
 
       {/* 类型标签 */}
       <div className="mb-2 md:mb-4">
-        <span className="rounded-full bg-white/20 px-3 py-0.5 text-xs font-medium text-white backdrop-blur-sm md:px-4 md:py-1 md:text-sm">
+        <span className="inline-flex items-center gap-1 rounded-full bg-white/30 px-3 py-0.5 text-xs font-medium text-white backdrop-blur-sm md:px-4 md:py-1 md:text-sm">
+          <Icon icon={getTypeIcon()} className="text-sm" />
           {getTypeLabel()}
         </span>
       </div>
@@ -157,7 +173,7 @@ export function QuestionCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className={`absolute inset-0 flex items-center justify-center rounded-3xl ${
-              isCorrect ? 'bg-green-500/30' : 'bg-red-500/30'
+              isCorrect ? 'bg-emerald-400/40' : 'bg-rose-400/40'
             }`}
           >
             <motion.span
@@ -165,7 +181,7 @@ export function QuestionCard({
               animate={{ scale: 1 }}
               className="text-5xl md:text-7xl lg:text-8xl"
             >
-              {isCorrect ? '✅' : '❌'}
+              <Icon icon={isCorrect ? 'mdi:check-circle' : 'mdi:close-circle'} className="text-white" />
             </motion.span>
           </motion.div>
         )}
