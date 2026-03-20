@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { Icon } from './Icon';
 
 interface NumberPickerProps {
   isOpen: boolean;
@@ -45,15 +46,24 @@ export function NumberPicker({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-white p-4 pb-6 shadow-xl md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-3xl md:max-w-md md:pb-6"
+            className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl bg-white p-4 pb-6 shadow-xl md:bottom-4 md:left-[2.5%] md:right-[2.5%] md:top-auto md:w-[95%] md:rounded-2xl md:pb-6"
           >
-            {/* 标题 */}
-            <div className="mb-4 text-center">
-              <h3 className="text-lg font-bold text-gray-800 md:text-xl">{title}</h3>
+            {/* 标题栏 */}
+            <div className="mb-6 relative">
+              <h3 className="text-lg font-bold text-gray-800 md:text-xl text-center">{title}</h3>
+              {/* 关闭按钮 - 右上角 */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={onClose}
+                className="absolute -top-1 -right-1 p-2 rounded-full hover:bg-gray-100"
+              >
+                <Icon icon="mdi:close" className="w-6 h-6 text-gray-500" />
+              </motion.button>
             </div>
 
             {/* 数字网格 */}
-            <div className="grid grid-cols-6 gap-2 md:gap-3">
+            <div className="grid grid-cols-11 md:grid-cols-16 gap-2 md:gap-3">
               {numbers.map((num) => (
                 <motion.button
                   key={num}
@@ -65,18 +75,6 @@ export function NumberPicker({
                   {num}
                 </motion.button>
               ))}
-            </div>
-
-            {/* 关闭按钮 */}
-            <div className="mt-4 flex justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={onClose}
-                className="rounded-full bg-gray-200 px-8 py-2 text-base font-medium text-gray-600 md:px-12 md:py-3 md:text-lg"
-              >
-                取消
-              </motion.button>
             </div>
           </motion.div>
         </>

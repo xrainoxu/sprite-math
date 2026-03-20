@@ -235,7 +235,7 @@ export function QuestionCard({
         isOpen={isPickerOpen}
         onClose={() => setIsPickerOpen(false)}
         onSelect={handleNumberSelect}
-        maxNumber={20}
+        maxNumber={30}
         title="请选择答案"
       />
     </>
