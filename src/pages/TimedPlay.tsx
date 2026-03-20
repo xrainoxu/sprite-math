@@ -1,8 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { GameHeader } from '../components/GameHeader';
+import { GameOver } from '../components/GameOver';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateHighestScore, recordAnswer } from '../utils/storage';
@@ -121,60 +122,20 @@ export function TimedPlay() {
     const accuracy = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center"
-        >
-          <h1 className="mb-6 text-5xl font-bold text-white md:text-7xl">游戏结束!</h1>
-          <div className="mb-8 grid grid-cols-2 gap-4 md:gap-6">
-            <div className="rounded-2xl bg-yellow-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{score}</p>
-              <p className="text-white/80 md:text-xl">得分</p>
-            </div>
-            <div className="rounded-2xl bg-green-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{accuracy}%</p>
-              <p className="text-white/80 md:text-xl">正确率</p>
-            </div>
-            <div className="rounded-2xl bg-blue-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{correctCount}</p>
-              <p className="text-white/80 md:text-xl">答对</p>
-            </div>
-            <div className="rounded-2xl bg-purple-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{totalCount}</p>
-              <p className="text-white/80 md:text-xl">总题数</p>
-            </div>
-          </div>
-          {score >= highScore && score > 0 && (
-            <motion.p
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="mb-6 text-2xl font-bold text-yellow-300 md:text-4xl"
-            >
-              🎉 新纪录！🎉
-            </motion.p>
-          )}
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={restartGame}
-              className="rounded-full bg-white px-8 py-4 text-xl font-bold text-indigo-600 shadow-xl transition-all hover:bg-indigo-50 md:px-12 md:py-6 md:text-2xl"
-            >
-              再来一次
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/timed')}
-              className="rounded-full bg-white/20 px-8 py-4 text-xl font-bold text-white shadow-xl transition-all hover:bg-white/30 md:px-12 md:py-6 md:text-2xl"
-            >
-              返回选择
-            </motion.button>
-          </div>
-        </motion.div>
-      </div>
+      <GameOver
+        title="游戏结束"
+        stats={[
+          { value: score, label: '得分', color: 'text-amber-600', bgColor: 'bg-amber-100' },
+          { value: `${accuracy}%`, label: '正确率', color: 'text-emerald-600', bgColor: 'bg-emerald-100' },
+          { value: correctCount, label: '答对', color: 'text-blue-600', bgColor: 'bg-blue-100' },
+          { value: totalCount, label: '总题数', color: 'text-violet-600', bgColor: 'bg-violet-100' },
+        ]}
+        isNewHighScore={score >= highScore && score > 0}
+        highScore={highScore}
+        onRestart={restartGame}
+        onExit={() => navigate('/timed')}
+        theme="rose"
+      />
     );
   }
 

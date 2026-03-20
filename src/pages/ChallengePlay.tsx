@@ -1,8 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { GameHeader } from '../components/GameHeader';
+import { GameOver } from '../components/GameOver';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateLongestStreak, recordAnswer } from '../utils/storage';
@@ -41,6 +42,7 @@ export function ChallengePlay() {
     setEnergy(0);
     setLevel(1);
     setCorrectCount(0);
+    setWrongCount(0);
     setQuestion(generateQuestion());
     setFeedback({ show: false, isCorrect: false });
     setSelectedAnswer('');
@@ -120,55 +122,24 @@ export function ChallengePlay() {
   }, [question, feedback.show, handleAnswer]);
 
   if (gameState === 'finished') {
+    const handleRestart = () => {
+      setGameState('playing');
+      startGame();
+    };
+
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center p-4 md:p-8">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center"
-        >
-          <h1 className="mb-6 text-5xl font-bold text-white md:text-7xl">游戏结束</h1>
-          <div className="mb-8 grid grid-cols-2 gap-4 md:gap-6">
-            <div className="rounded-2xl bg-yellow-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{score}</p>
-              <p className="text-white/80 md:text-xl">得分</p>
-            </div>
-            <div className="rounded-2xl bg-purple-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{level}</p>
-              <p className="text-white/80 md:text-xl">到达关卡</p>
-            </div>
-            <div className="rounded-2xl bg-blue-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{correctCount}</p>
-              <p className="text-white/80 md:text-xl">答对</p>
-            </div>
-            <div className="rounded-2xl bg-orange-500/30 p-6 backdrop-blur-sm md:p-8">
-              <p className="text-4xl font-bold text-white md:text-6xl">{streak}</p>
-              <p className="text-white/80 md:text-xl">最高连击</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setGameState('playing');
-                startGame();
-              }}
-              className="rounded-full bg-white px-8 py-4 text-xl font-bold text-indigo-600 shadow-xl transition-all hover:bg-indigo-50 md:px-12 md:py-6 md:text-2xl"
-            >
-              再来一次
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/challenge')}
-              className="rounded-full bg-white/20 px-8 py-4 text-xl font-bold text-white shadow-xl transition-all hover:bg-white/30 md:px-12 md:py-6 md:text-2xl"
-            >
-              返回选择
-            </motion.button>
-          </div>
-        </motion.div>
-      </div>
+      <GameOver
+        title="游戏结束"
+        stats={[
+          { value: score, label: '得分', color: 'text-amber-600', bgColor: 'bg-amber-100' },
+          { value: level, label: '到达关卡', color: 'text-violet-600', bgColor: 'bg-violet-100' },
+          { value: correctCount, label: '答对', color: 'text-blue-600', bgColor: 'bg-blue-100' },
+          { value: streak, label: '最高连击', color: 'text-orange-600', bgColor: 'bg-orange-100' },
+        ]}
+        onRestart={handleRestart}
+        onExit={() => navigate('/challenge')}
+        theme="violet"
+      />
     );
   }
 
