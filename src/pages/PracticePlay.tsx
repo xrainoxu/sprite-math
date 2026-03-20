@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { ScoreDisplay } from '../components/ScoreDisplay';
+import { GameHeader } from '../components/GameHeader';
 import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question, QuestionType } from '../utils/math';
@@ -84,23 +85,21 @@ export function PracticePlay() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      {/* 顶部栏 - 柔和橙黄背景 */}
-      <div className="flex shrink-0 items-center justify-between rounded-b-3xl bg-gradient-to-r from-amber-100 to-orange-100 px-2 py-3 shadow-md md:px-4 md:py-4">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/practice')}
-          className="rounded-full bg-orange-400 px-3 py-1.5 text-sm font-bold text-white shadow-md hover:bg-orange-500 md:px-4 md:py-2 md:text-base"
-        >
-          退出
-        </motion.button>
-
-        <ScoreDisplay score={score} streak={streak} />
-
-        <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
-          <span className="font-bold text-orange-600 md:text-lg">{accuracy}%</span>
-        </div>
-      </div>
+      {/* 顶部栏 */}
+      <GameHeader
+        onExit={() => navigate('/practice')}
+        score={score}
+        streak={streak}
+        theme="orange"
+        rightContent={
+          <div className="flex items-center gap-3 md:gap-4">
+            <ScoreDisplay score={score} streak={streak} />
+            <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
+              <span className="font-bold text-orange-600 md:text-lg">{accuracy}%</span>
+            </div>
+          </div>
+        }
+      />
 
       {/* 中间区域 - 题目和答题区，不滚动 */}
       <div className="flex flex-1 flex-col justify-center overflow-hidden px-2 md:px-6">
@@ -125,7 +124,7 @@ export function PracticePlay() {
       </div>
 
       {/* 底部统计 */}
-      <div className="shrink-0 rounded-t-3xl bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-3 shadow-md md:px-6 md:py-4">
+      <div className="shrink-0 rounded-t-2xl bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-2 shadow-md md:px-6 md:py-3">
         <GameProgressBar value={correctCount} label="答对题数" />
       </div>
     </div>

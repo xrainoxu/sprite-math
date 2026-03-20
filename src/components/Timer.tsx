@@ -35,15 +35,15 @@ export function Timer({ seconds, onTimeUp, isPaused = false }: TimerProps) {
 
   return (
     <motion.div
-      className={`flex items-center gap-2 rounded-full px-4 py-2 ${
+      className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 ${
         isLow ? 'bg-red-400 shadow-lg' : 'bg-white shadow-md'
-      } md:px-5 md:py-2.5 lg:px-6 lg:py-3`}
+      } md:px-4 md:py-2`}
       animate={isLow ? { scale: [1, 1.1, 1] } : {}}
       transition={{ repeat: isLow ? Infinity : 0, duration: 0.5 }}
     >
-      <span className="text-2xl md:text-3xl lg:text-4xl">{isLow ? '⏰' : '⏱️'}</span>
+      <span className="text-lg md:text-xl lg:text-2xl">{isLow ? '⏰' : '⏱️'}</span>
       <span
-        className={`text-2xl font-bold ${isLow ? 'text-white' : 'text-rose-600'} md:text-3xl lg:text-4xl`}
+        className={`text-lg font-bold ${isLow ? 'text-white' : 'text-rose-600'} md:text-xl lg:text-2xl`}
       >
         {timeLeft}s
       </span>

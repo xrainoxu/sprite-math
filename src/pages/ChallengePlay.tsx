@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
-import { ScoreDisplay } from '../components/ScoreDisplay';
+import { GameHeader } from '../components/GameHeader';
 import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
@@ -174,38 +174,16 @@ export function ChallengePlay() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      {/* 顶部栏 - 柔和紫蓝背景 */}
-      <div className="flex shrink-0 items-center justify-between rounded-b-3xl bg-gradient-to-r from-violet-100 to-purple-100 px-2 py-3 shadow-md md:px-4 md:py-4">
-        <div className="flex items-center gap-2 md:gap-3">
-          {/* 生命值 */}
-          <div className="flex gap-0.5">
-            {Array.from({ length: MAX_HEALTH }).map((_, i) => (
-              <motion.span
-                key={i}
-                animate={i < health ? { scale: [1, 1.2, 1] } : {}}
-                className={`text-xl md:text-2xl lg:text-3xl ${i < health ? '' : 'opacity-30'}`}
-              >
-                ❤️
-              </motion.span>
-            ))}
-          </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/challenge')}
-            className="rounded-full bg-violet-400 px-3 py-1.5 text-sm font-bold text-white shadow-md hover:bg-violet-500 md:px-4 md:py-2 md:text-base"
-          >
-            退出
-          </motion.button>
-        </div>
-
-        {/* 关卡 */}
-        <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
-          <span className="text-base font-bold text-violet-700 md:text-lg lg:text-xl">第 {level} 关</span>
-        </div>
-
-        <ScoreDisplay score={score} streak={streak} />
-      </div>
+      {/* 顶部栏 */}
+      <GameHeader
+        onExit={() => navigate('/challenge')}
+        score={score}
+        streak={streak}
+        level={level}
+        health={health}
+        maxHealth={MAX_HEALTH}
+        theme="violet"
+      />
 
       {/* 中间区域 - 题目和答题区，不滚动 */}
       <div className="flex flex-1 flex-col justify-center overflow-hidden px-2 md:px-6">
@@ -230,7 +208,7 @@ export function ChallengePlay() {
       </div>
 
       {/* 底部 - 能量条 */}
-      <div className="shrink-0 rounded-t-3xl bg-gradient-to-r from-violet-100 to-purple-100 px-4 py-3 shadow-md md:px-6 md:py-4">
+      <div className="shrink-0 rounded-t-2xl bg-gradient-to-r from-violet-100 to-purple-100 px-4 py-2 shadow-md md:px-6 md:py-3">
         <GameProgressBar value={energy} max={MAX_ENERGY} label="能量" />
       </div>
     </div>
