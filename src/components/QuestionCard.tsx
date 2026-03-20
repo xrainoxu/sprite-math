@@ -69,19 +69,19 @@ export function QuestionCard({
 
   const renderCalculationQuestion = () => {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 md:gap-6 lg:gap-10">
+      <div className="flex flex-col items-center justify-center gap-3 md:gap-6 lg:gap-10">
         {/* 题目表达式 */}
         <motion.h2
           key={question.id}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-center text-6xl font-bold text-white drop-shadow-lg md:text-7xl lg:text-8xl"
+          className="text-center text-5xl font-bold text-white drop-shadow-lg md:text-7xl lg:text-8xl"
         >
           {question.question}
         </motion.h2>
 
         {/* 答案选项按钮 - 平铺显示 */}
-        <div className="grid grid-cols-8 md:grid-cols-11 gap-2 md:gap-3">
+        <div className="grid grid-cols-6 md:grid-cols-11 gap-2 md:gap-3">
           {answerOptions.map((num) => {
             const isSelected = selectedAnswer === String(num);
             const isCorrectAnswer = question.answer === String(num);
@@ -105,7 +105,7 @@ export function QuestionCard({
                 whileTap={!showFeedback ? { scale: 0.95 } : {}}
                 onClick={() => !showFeedback && handleNumberSelect(num)}
                 disabled={showFeedback}
-                className={`flex h-12 w-12 items-center justify-center rounded-xl text-lg font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                className={`flex h-11 w-11 items-center justify-center rounded-xl text-base font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
               >
                 {num}
               </motion.button>
@@ -122,28 +122,28 @@ export function QuestionCard({
     const rightExpr = parts[1] || '';
 
     return (
-      <div className="flex flex-col items-center justify-center gap-4 md:gap-6 lg:gap-10">
+      <div className="flex flex-col items-center justify-center gap-3 md:gap-6 lg:gap-10">
         {/* 表达式行 */}
-        <div className="flex items-center justify-center gap-4 md:gap-6 lg:gap-10">
+        <div className="flex items-center justify-center gap-2 md:gap-6 lg:gap-10">
           {/* 左边表达式 */}
           <motion.span
             key={`left-${question.id}`}
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="text-5xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
+            className="text-4xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
           >
             {leftExpr}
           </motion.span>
 
           {/* 圆圈占位符 */}
-          <div className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white/50 md:h-20 md:w-20 lg:h-24 lg:w-24" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-white/50 md:h-20 md:w-20 lg:h-24 lg:w-24" />
 
           {/* 右边表达式 */}
           <motion.span
             key={`right-${question.id}`}
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="text-5xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
+            className="text-4xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
           >
             {rightExpr}
           </motion.span>
@@ -171,17 +171,17 @@ export function QuestionCard({
             }
 
             return (
-              <div key={op} className="flex flex-col items-center gap-2 md:gap-3">
+              <div key={op} className="flex flex-col items-center gap-1 md:gap-3">
                 <motion.button
                   whileHover={!showFeedback ? { scale: 1.1 } : {}}
                   whileTap={!showFeedback ? { scale: 0.95 } : {}}
                   onClick={() => !showFeedback && onSelectAnswer?.(op)}
                   disabled={showFeedback}
-                  className={`flex h-20 w-20 items-center justify-center rounded-full text-3xl font-bold transition-all md:h-24 md:w-24 md:text-4xl lg:h-28 lg:w-28 lg:text-5xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                  className={`flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold transition-all md:h-24 md:w-24 md:text-4xl lg:h-28 lg:w-28 lg:text-5xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
                 >
                   {showFeedback && isCorrectAnswer ? op : op}
                 </motion.button>
-                <span className={`text-base md:text-lg ${labelClass}`}>
+                <span className={`text-sm md:text-lg ${labelClass}`}>
                   {index === 0 ? '大于' : index === 1 ? '小于' : '等于'}
                 </span>
               </div>
@@ -213,7 +213,7 @@ export function QuestionCard({
         </div>
 
         {/* 题目内容 */}
-        <div className="relative flex min-h-[120px] items-center justify-center md:min-h-[140px] lg:min-h-[180px]">
+        <div className="relative flex min-h-[100px] items-center justify-center py-2 md:min-h-[140px] md:py-0 lg:min-h-[180px]">
           {question.type === 'comparison'
             ? renderComparisonQuestion()
             : renderCalculationQuestion()}
