@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import type { Question } from '../utils/math';
 import { motion } from 'framer-motion';
 import { Icon } from './Icon';
+import { NumberPicker } from './NumberPicker';
 
 interface QuestionCardProps {
   question: Question;
@@ -17,6 +19,8 @@ export function QuestionCard({
   selectedAnswer,
   onSelectAnswer,
 }: QuestionCardProps) {
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+
   // 卡通明亮配色
   const getTypeColor = () => {
     switch (question.type) {
@@ -55,6 +59,52 @@ export function QuestionCard({
       default:
         return '题目';
     }
+  };
+
+  // 处理加减法的数字选择
+  const handleNumberSelect = (num: number) => {
+    if (!showFeedback) {
+      onSelectAnswer?.(String(num));
+    }
+  };
+
+  const renderCalculationQuestion = () => {
+    return (
+      <div className="flex flex-col items-center justify-center gap-2 md:gap-4 lg:gap-6">
+        {/* 题目表达式 */}
+        <motion.h2
+          key={question.id}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="text-center text-4xl font-bold text-white drop-shadow-lg md:text-5xl lg:text-6xl"
+        >
+          {question.question}
+        </motion.h2>
+
+        {/* 答案输入按钮 */}
+        <div className="flex flex-col items-center gap-1 md:gap-2">
+          <motion.button
+            type="button"
+            whileHover={!showFeedback ? { scale: 1.1 } : {}}
+            whileTap={!showFeedback ? { scale: 0.95 } : {}}
+            onClick={() => !showFeedback && setIsPickerOpen(true)}
+            disabled={showFeedback}
+            className={`flex h-14 w-14 items-center justify-center rounded-full text-2xl font-bold shadow-lg transition-all md:h-16 md:w-16 md:text-3xl lg:h-20 lg:w-20 lg:text-4xl ${
+              showFeedback
+                ? isCorrect
+                  ? 'bg-green-400 ring-4 ring-green-200 text-white'
+                  : 'bg-red-400 ring-4 ring-red-200 text-white'
+                : 'bg-white/30 text-white ring-2 ring-white/30 hover:bg-white/50 cursor-pointer'
+            }`}
+          >
+            {showFeedback ? question.answer : '?'}
+          </motion.button>
+          <span className="text-xs text-white/80 md:text-sm">
+            {showFeedback ? (isCorrect ? '正确!' : '正确答案: ' + question.answer) : '点击输入'}
+          </span>
+        </div>
+      </div>
+    );
   };
 
   const renderComparisonQuestion = () => {
@@ -120,7 +170,7 @@ export function QuestionCard({
                   disabled={showFeedback}
                   className={`flex h-12 w-12 items-center justify-center rounded-full text-xl font-bold transition-all md:h-14 md:w-14 md:text-2xl lg:h-16 lg:w-16 lg:text-3xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
                 >
-                  {op}
+                  {showFeedback && isCorrectAnswer ? op : op}
                 </motion.button>
                 <span className={`text-xs md:text-sm ${labelClass}`}>
                   {index === 0 ? '大于' : index === 1 ? '小于' : '等于'}
@@ -134,58 +184,60 @@ export function QuestionCard({
   };
 
   return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      className={`relative shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${getTypeColor()} p-4 shadow-2xl md:p-6 lg:p-8`}
-    >
-      {/* 装饰性背景圆 */}
-      <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/20 md:h-32 md:w-32 lg:h-40 lg:w-40" />
-      <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/10 md:h-28 md:w-28 lg:h-32 lg:w-32" />
+    <>
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        className={`relative shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${getTypeColor()} p-4 shadow-2xl md:p-6 lg:p-8`}
+      >
+        {/* 装饰性背景圆 */}
+        <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/20 md:h-32 md:w-32 lg:h-40 lg:w-40" />
+        <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/10 md:h-28 md:w-28 lg:h-32 lg:w-32" />
 
-      {/* 类型标签 */}
-      <div className="mb-2 md:mb-4">
-        <span className="inline-flex items-center gap-1 rounded-full bg-white/30 px-3 py-0.5 text-xs font-medium text-white backdrop-blur-sm md:px-4 md:py-1 md:text-sm">
-          <Icon icon={getTypeIcon()} className="text-sm" />
-          {getTypeLabel()}
-        </span>
-      </div>
+        {/* 类型标签 */}
+        <div className="mb-2 md:mb-4">
+          <span className="inline-flex items-center gap-1 rounded-full bg-white/30 px-3 py-0.5 text-xs font-medium text-white backdrop-blur-sm md:px-4 md:py-1 md:text-sm">
+            <Icon icon={getTypeIcon()} className="text-sm" />
+            {getTypeLabel()}
+          </span>
+        </div>
 
-      {/* 题目内容 */}
-      <div className="relative flex min-h-[60px] items-center justify-center md:min-h-[80px] lg:min-h-[100px]">
-        {question.type === 'comparison' ? (
-          renderComparisonQuestion()
-        ) : (
-          <motion.h2
-            key={question.id}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="text-center text-4xl font-bold text-white drop-shadow-lg md:text-5xl lg:text-6xl"
-          >
-            {question.question}
-          </motion.h2>
-        )}
+        {/* 题目内容 */}
+        <div className="relative flex min-h-[80px] items-center justify-center md:min-h-[100px] lg:min-h-[120px]">
+          {question.type === 'comparison'
+            ? renderComparisonQuestion()
+            : renderCalculationQuestion()}
 
-        {/* 答题反馈遮罩 */}
-        {showFeedback && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`absolute inset-0 flex items-center justify-center rounded-3xl ${
-              isCorrect ? 'bg-emerald-400/40' : 'bg-rose-400/40'
-            }`}
-          >
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="text-5xl md:text-7xl lg:text-8xl"
+          {/* 答题反馈遮罩 */}
+          {showFeedback && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className={`absolute inset-0 flex items-center justify-center rounded-3xl ${
+                isCorrect ? 'bg-emerald-400/40' : 'bg-rose-400/40'
+              }`}
             >
-              <Icon icon={isCorrect ? 'mdi:check-circle' : 'mdi:close-circle'} className="text-white" />
-            </motion.span>
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="text-5xl md:text-7xl lg:text-8xl"
+              >
+                <Icon icon={isCorrect ? 'mdi:check-circle' : 'mdi:close-circle'} className="text-white" />
+              </motion.span>
+            </motion.div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* 数字选择浮层 */}
+      <NumberPicker
+        isOpen={isPickerOpen}
+        onClose={() => setIsPickerOpen(false)}
+        onSelect={handleNumberSelect}
+        maxNumber={20}
+        title="请选择答案"
+      />
+    </>
   );
 }
