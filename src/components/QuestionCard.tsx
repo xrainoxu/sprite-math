@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import type { Question } from '../utils/math';
 import { motion } from 'framer-motion';
 import { Icon } from './Icon';
-import { NumberPicker } from './NumberPicker';
 
 interface QuestionCardProps {
   question: Question;
@@ -19,8 +17,6 @@ export function QuestionCard({
   selectedAnswer,
   onSelectAnswer,
 }: QuestionCardProps) {
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
-
   // 卡通明亮配色
   const getTypeColor = () => {
     switch (question.type) {
@@ -68,6 +64,9 @@ export function QuestionCard({
     }
   };
 
+  // 生成答案选项 (0-30)
+  const answerOptions = Array.from({ length: 31 }, (_, i) => i);
+
   const renderCalculationQuestion = () => {
     return (
       <div className="flex flex-col items-center justify-center gap-4 md:gap-6 lg:gap-10">
@@ -81,27 +80,37 @@ export function QuestionCard({
           {question.question}
         </motion.h2>
 
-        {/* 答案输入按钮 */}
-        <div className="flex flex-col items-center gap-2 md:gap-3">
-          <motion.button
-            type="button"
-            whileHover={!showFeedback ? { scale: 1.1 } : {}}
-            whileTap={!showFeedback ? { scale: 0.95 } : {}}
-            onClick={() => !showFeedback && setIsPickerOpen(true)}
-            disabled={showFeedback}
-            className={`flex h-20 w-20 items-center justify-center rounded-full text-4xl font-bold shadow-lg transition-all md:h-24 md:w-24 md:text-5xl lg:h-28 lg:w-28 lg:text-6xl ${
-              showFeedback
-                ? isCorrect
-                  ? 'bg-green-400 ring-4 ring-green-200 text-white'
-                  : 'bg-red-400 ring-4 ring-red-200 text-white'
-                : 'bg-white/30 text-white ring-2 ring-white/30 hover:bg-white/50 cursor-pointer'
-            }`}
-          >
-            {showFeedback ? question.answer : '?'}
-          </motion.button>
-          <span className="text-base text-white/80 md:text-lg">
-            {showFeedback ? (isCorrect ? '正确!' : '正确答案: ' + question.answer) : '点击输入'}
-          </span>
+        {/* 答案选项按钮 - 平铺显示 */}
+        <div className="grid grid-cols-8 md:grid-cols-11 gap-2 md:gap-3">
+          {answerOptions.map((num) => {
+            const isSelected = selectedAnswer === String(num);
+            const isCorrectAnswer = question.answer === String(num);
+            let btnClass = 'bg-white/30 hover:bg-white/50 text-white ring-2 ring-white/30';
+
+            if (showFeedback) {
+              if (isCorrectAnswer) {
+                btnClass = 'bg-green-400 ring-4 ring-green-200 text-white';
+              } else if (isSelected && !isCorrectAnswer) {
+                btnClass = 'bg-red-400 ring-4 ring-red-200 text-white';
+              }
+            } else if (isSelected) {
+              btnClass = 'bg-white text-purple-600 ring-4 ring-purple-300';
+            }
+
+            return (
+              <motion.button
+                key={num}
+                type="button"
+                whileHover={!showFeedback ? { scale: 1.05 } : {}}
+                whileTap={!showFeedback ? { scale: 0.95 } : {}}
+                onClick={() => !showFeedback && handleNumberSelect(num)}
+                disabled={showFeedback}
+                className={`flex h-12 w-12 items-center justify-center rounded-xl text-lg font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+              >
+                {num}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
     );
@@ -230,14 +239,6 @@ export function QuestionCard({
         </div>
       </motion.div>
 
-      {/* 数字选择浮层 */}
-      <NumberPicker
-        isOpen={isPickerOpen}
-        onClose={() => setIsPickerOpen(false)}
-        onSelect={handleNumberSelect}
-        maxNumber={30}
-        title="请选择答案"
-      />
     </>
   );
 }
