@@ -13,21 +13,21 @@ export function GameProgressBar({ value, max, label = '进度' }: GameProgressBa
 
   return (
     <div className="w-full">
-      <div className="relative h-8 overflow-hidden rounded-full bg-white shadow-inner md:h-10">
+      <div className="relative h-8 overflow-hidden rounded-xl border-2 border-white/50 bg-white/30 shadow-sm md:h-9">
         {/* 进度填充 - 仅当有最大值时显示 */}
         {hasMax && (
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-400 to-purple-500"
+            className="absolute inset-y-0 left-0 rounded-lg bg-gradient-to-r from-violet-400 to-purple-500"
           />
         )}
 
         {/* 进度文字（居中显示） */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-sm font-bold text-purple-700 md:text-base lg:text-lg">
-            {hasMax ? `${label}: ${value} / ${max}` : `${label}: ${value}`}
+          <span className="text-xs font-bold text-purple-700 md:text-sm">
+            {hasMax ? `${label}: ${value}/${max}` : `${label}: ${value}`}
           </span>
         </div>
       </div>

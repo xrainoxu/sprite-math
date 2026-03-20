@@ -74,7 +74,7 @@ export function GameHeader({
     if (level) {
       return (
         <div className="flex items-center gap-2">
-          <div className="rounded-full bg-white px-3 py-1 shadow-md md:px-4 md:py-2">
+          <div className="rounded-xl bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
             <span className={`text-sm font-bold text-${theme === 'orange' ? 'orange' : 'violet'}-700 md:text-base`}>
               第 {level} 关
             </span>
@@ -86,7 +86,7 @@ export function GameHeader({
                 <motion.span
                   key={i}
                   animate={i < health ? { scale: [1, 1.2, 1] } : {}}
-                  className={`text-lg md:text-xl ${i < health ? '' : 'opacity-30'}`}
+                  className={`text-base md:text-lg ${i < health ? '' : 'opacity-30'}`}
                 >
                   ❤️
                 </motion.span>
@@ -113,26 +113,26 @@ export function GameHeader({
 
   return (
     <div
-      className={`flex shrink-0 items-center justify-between rounded-b-2xl bg-gradient-to-r ${themeStyle.bg} px-3 py-2 shadow-md md:px-4 md:py-2`}
+      className={`flex shrink-0 items-center justify-between rounded-b-xl bg-gradient-to-r ${themeStyle.bg} px-2 py-2 shadow-md md:px-3`}
     >
       {/* 左侧：自定义内容或默认的关卡/计时器 */}
-      <div className="flex shrink-0 items-center gap-2 md:gap-3">
+      <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
         {leftContent || renderDefaultLeftContent()}
       </div>
 
       {/* 中间：进度条 */}
-      <div className="flex-1 px-2 md:px-3">
+      <div className="flex-1 px-1.5 md:px-2">
         {renderProgress()}
       </div>
 
       {/* 右侧：分数显示 + 退出按钮 */}
-      <div className="flex shrink-0 items-center gap-2 md:gap-3">
+      <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
         {rightContent || <ScoreDisplay score={score} streak={streak} />}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onExit}
-          className={`rounded-full ${themeStyle.exitBtn} px-3 py-1.5 text-sm font-bold text-white shadow-md md:px-4 md:py-2 md:text-base`}
+          className={`rounded-xl ${themeStyle.exitBtn} px-3 py-1.5 text-sm font-bold text-white shadow-md md:px-4 md:py-2 md:text-base`}
         >
           退出
         </motion.button>
