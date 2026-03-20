@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { getStats } from '../utils/storage';
 import { Icon } from '../components/Icon';
 
-const TIME_OPTIONS = [
-  { seconds: 60, label: '1分钟' },
-  { seconds: 120, label: '2分钟' },
-  { seconds: 180, label: '3分钟' },
-  { seconds: 300, label: '5分钟' },
-];
-
 export function TimedMode() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedDuration, setSelectedDuration] = useState(60);
   const [highScore, setHighScore] = useState(0);
+
+  const timeOptions = [
+    { seconds: 60, minutes: 1 },
+    { seconds: 120, minutes: 2 },
+    { seconds: 180, minutes: 3 },
+    { seconds: 300, minutes: 5 },
+  ];
 
   useEffect(() => {
     const stats = getStats();
@@ -36,7 +38,7 @@ export function TimedMode() {
         onClick={() => navigate('/')}
         className="absolute left-4 top-4 rounded-full bg-amber-200 px-4 py-2 text-amber-800 shadow-md hover:bg-amber-300"
       >
-        ← 退出
+        ← {t('timedMode.exit')}
       </motion.button>
 
       <motion.div
@@ -46,15 +48,15 @@ export function TimedMode() {
       >
         <h1 className="mb-4 text-5xl font-bold text-amber-800">
           <Icon icon="mdi:timer-sand" className="mr-2 vertical-align: middle" />
-          计时挑战
+          {t('timedMode.title')}
         </h1>
         <p className="mb-4 text-xl text-amber-700">
-          选择时长，完成尽可能多的题目！
+          {t('timedMode.description')}
         </p>
 
         {/* 时长选择 */}
         <div className="mb-4 flex flex-wrap justify-center gap-3">
-          {TIME_OPTIONS.map((option) => (
+          {timeOptions.map((option) => (
             <motion.button
               key={option.seconds}
               whileHover={{ scale: 1.05 }}
@@ -67,7 +69,7 @@ export function TimedMode() {
               }`}
               style={selectedDuration === option.seconds ? { backgroundColor: '#fbbf24' } : undefined}
             >
-              {option.label}
+              {t('timedMode.minutes', { count: option.minutes })}
             </motion.button>
           ))}
         </div>
@@ -75,7 +77,7 @@ export function TimedMode() {
         <div className="mb-8 rounded-2xl bg-amber-100/80 border-2 border-amber-300 p-6 shadow-md">
           <p className="text-lg text-amber-900">
             <Icon icon="mdi:trophy" className="mr-2 vertical-align: middle" />
-            最高分: <span className="font-bold">{highScore}</span>
+            {t('timedMode.highScore')} <span className="font-bold">{highScore}</span>
           </p>
         </div>
         <motion.button
@@ -85,7 +87,7 @@ export function TimedMode() {
           className="rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:from-amber-500 hover:to-orange-500"
           style={{ backgroundColor: '#fbbf24' }}
         >
-          开始挑战
+          {t('timedMode.start')}
         </motion.button>
       </motion.div>
     </div>

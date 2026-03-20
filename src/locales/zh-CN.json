@@ -1,0 +1,98 @@
+{
+  "app": {
+    "title": "MathFun",
+    "subtitle": "趣味算术训练，提升计算速度",
+    "footer": "20以内加减法 | 大小判断 | 趣味训练"
+  },
+  "home": {
+    "timedChallenge": "计时挑战",
+    "timedDescription": "60秒内完成尽可能多的题目",
+    "challengeMode": "闯关模式",
+    "challengeDescription": "答对积累能量，答错扣血",
+    "practiceMode": "自由练习",
+    "practiceDescription": "选择题型，无压力练习"
+  },
+  "stats": {
+    "highScore": "最高分",
+    "longestStreak": "最长连击",
+    "todayAccuracy": "今日正确率",
+    "totalQuestions": "总答题数"
+  },
+  "timedMode": {
+    "title": "计时挑战",
+    "description": "选择时长，完成尽可能多的题目！",
+    "minutes": "{{count}}分钟",
+    "highScore": "最高分:",
+    "start": "开始挑战",
+    "exit": "退出"
+  },
+  "challengeMode": {
+    "title": "闯关模式",
+    "description": "答对积累能量，答错扣血！坚持到最后！",
+    "health": "生命值:",
+    "energy": "能量满:",
+    "levelUp": "升级",
+    "start": "开始闯关",
+    "exit": "退出"
+  },
+  "practiceMode": {
+    "title": "自由练习",
+    "description": "选择想要练习的题目类型",
+    "addition": "加法",
+    "subtraction": "减法",
+    "comparison": "大小",
+    "start": "开始练习",
+    "selectType": "请至少选择一种题目类型",
+    "exit": "退出"
+  },
+  "timedPlay": {
+    "gameOver": "游戏结束",
+    "score": "得分",
+    "accuracy": "正确率",
+    "correct": "答对",
+    "total": "总题数",
+    "progress": "进度"
+  },
+  "challengePlay": {
+    "gameOver": "游戏结束",
+    "score": "得分",
+    "levelReached": "到达关卡",
+    "correct": "答对",
+    "bestStreak": "最高连击",
+    "progress": "进度"
+  },
+  "gameOver": {
+    "newRecord": "新纪录！",
+    "highScore": "最高分:",
+    "playAgain": "再来一次",
+    "backToSelection": "返回选择"
+  },
+  "gameHeader": {
+    "level": "第 {{level}} 关",
+    "progress": "进度",
+    "exit": "退出"
+  },
+  "questionCard": {
+    "addition": "加法",
+    "subtraction": "减法",
+    "comparison": "大小判断",
+    "greaterThan": "大于",
+    "lessThan": "小于",
+    "equalTo": "等于",
+    "question": "题目"
+  },
+  "numberPicker": {
+    "selectAnswer": "请选择答案"
+  },
+  "progressBar": {
+    "progress": "进度"
+  },
+  "timer": {
+    "timeUp": "时间到"
+  },
+  "gameProgressBar": {
+    "answerProgress": "答题进度",
+    "correct": "答对",
+    "incorrect": "答错"
+  }
+}

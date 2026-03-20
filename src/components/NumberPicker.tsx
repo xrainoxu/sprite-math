@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Icon } from './Icon';
 
 interface NumberPickerProps {
@@ -16,8 +17,10 @@ export function NumberPicker({
   onSelect,
   minNumber = 0,
   maxNumber = 20,
-  title = '请选择答案',
+  title,
 }: NumberPickerProps) {
+  const { t } = useTranslation();
+  const effectiveTitle = title || t('numberPicker.selectAnswer');
   // 生成数字数组
   const numbers = Array.from({ length: maxNumber - minNumber + 1 }, (_, i) => i + minNumber);
 
@@ -50,7 +53,7 @@ export function NumberPicker({
           >
             {/* 标题栏 */}
             <div className="mb-6 relative">
-              <h3 className="text-lg font-bold text-gray-800 md:text-xl text-center">{title}</h3>
+              <h3 className="text-lg font-bold text-gray-800 md:text-xl text-center">{effectiveTitle}</h3>
               {/* 关闭按钮 - 右上角 */}
               <motion.button
                 whileHover={{ scale: 1.1 }}

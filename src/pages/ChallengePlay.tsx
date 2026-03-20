@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { QuestionCard } from '../components/QuestionCard';
 import { GameHeader } from '../components/GameHeader';
 import { GameOver } from '../components/GameOver';
@@ -19,6 +20,7 @@ const MAX_ENERGY = 100;
 const ENERGY_PER_CORRECT = 15;
 
 export function ChallengePlay() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [gameState, setGameState] = useState<'playing' | 'finished'>('playing');
   const [question, setQuestion] = useState<Question | null>(null);
@@ -129,12 +131,12 @@ export function ChallengePlay() {
 
     return (
       <GameOver
-        title="游戏结束"
+        title={t('challengePlay.gameOver')}
         stats={[
-          { value: score, label: '得分', color: 'text-amber-600', bgColor: 'bg-amber-100' },
-          { value: level, label: '到达关卡', color: 'text-violet-600', bgColor: 'bg-violet-100' },
-          { value: correctCount, label: '答对', color: 'text-blue-600', bgColor: 'bg-blue-100' },
-          { value: streak, label: '最高连击', color: 'text-orange-600', bgColor: 'bg-orange-100' },
+          { value: score, label: t('challengePlay.score'), color: 'text-amber-600', bgColor: 'bg-amber-100' },
+          { value: level, label: t('challengePlay.levelReached'), color: 'text-violet-600', bgColor: 'bg-violet-100' },
+          { value: correctCount, label: t('challengePlay.correct'), color: 'text-blue-600', bgColor: 'bg-blue-100' },
+          { value: streak, label: t('challengePlay.bestStreak'), color: 'text-orange-600', bgColor: 'bg-orange-100' },
         ]}
         onRestart={handleRestart}
         onExit={() => navigate('/challenge')}

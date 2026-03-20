@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Timer } from './Timer';
 import { ScoreDisplay } from './ScoreDisplay';
 import { GameProgressBar } from './GameProgressBar';
@@ -25,7 +26,7 @@ interface GameHeaderProps {
   progressValue?: number;
   /** 进度条最大值 */
   progressMax?: number;
-  /** 进度条标签 */
+  /** 进度条标签（不传则使用默认翻译） */
   progressLabel?: string;
   /** 进度条答对数量 */
   progressCorrectCount?: number;
@@ -50,13 +51,16 @@ export function GameHeader({
   maxHealth = 3,
   progressValue,
   progressMax,
-  progressLabel = '进度',
+  progressLabel,
   progressCorrectCount,
   progressWrongCount,
   theme = 'rose',
   leftContent,
   rightContent,
 }: GameHeaderProps) {
+  const { t } = useTranslation();
+  // 如果没有传 progressLabel，使用默认翻译
+  const effectiveProgressLabel = progressLabel || t('gameHeader.progress');
   const themeClasses = {
     rose: {
       bg: 'from-rose-100 to-pink-100',
@@ -85,7 +89,7 @@ export function GameHeader({
         <div className="flex items-center gap-2">
           <div className="rounded-xl bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
             <span className={`text-sm font-bold text-${theme === 'orange' ? 'orange' : 'violet'}-700 md:text-base`}>
-              第 {level} 关
+              {t('gameHeader.level', { level })}
             </span>
           </div>
           {/* 生命值 */}
@@ -121,7 +125,7 @@ export function GameHeader({
       <GameProgressBar
         value={progressValue}
         max={progressMax}
-        label={progressLabel}
+        label={effectiveProgressLabel}
         correctCount={progressCorrectCount}
         wrongCount={progressWrongCount}
       />
@@ -152,7 +156,7 @@ export function GameHeader({
           onClick={onExit}
           className={`rounded-xl ${themeStyle.exitBtn} px-3 py-1.5 text-sm font-bold text-white shadow-md md:px-4 md:py-2 md:text-base`}
         >
-          退出
+          {t('gameHeader.exit')}
         </motion.button>
       </div>
     </div>

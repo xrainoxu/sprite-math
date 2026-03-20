@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import type { Stats } from '../utils/storage';
 import { getTodayAccuracy } from '../utils/storage';
 import { Icon } from './Icon';
@@ -8,6 +9,7 @@ interface StatsPanelProps {
 }
 
 export function StatsPanel({ stats }: StatsPanelProps) {
+  const { t } = useTranslation();
   const todayAccuracy = getTodayAccuracy();
 
   return (
@@ -18,28 +20,28 @@ export function StatsPanel({ stats }: StatsPanelProps) {
     >
       <StatCard
         icon="mdi:trophy"
-        label="最高分"
+        label={t('stats.highScore')}
         value={stats.highestScore.toString()}
         color="from-amber-300 to-orange-400"
         fallbackBg="#fcd34d"
       />
       <StatCard
         icon="mdi:fire"
-        label="最长连击"
+        label={t('stats.longestStreak')}
         value={stats.longestStreak.toString()}
         color="from-rose-300 to-pink-400"
         fallbackBg="#fda4af"
       />
       <StatCard
         icon="mdi:chart-line"
-        label="今日正确率"
+        label={t('stats.todayAccuracy')}
         value={todayAccuracy > 0 ? `${todayAccuracy}%` : '-'}
         color="from-emerald-300 to-teal-400"
         fallbackBg="#6ee7b7"
       />
       <StatCard
         icon="mdi:pencil"
-        label="总答题数"
+        label={t('stats.totalQuestions')}
         value={stats.totalAnswered.toString()}
         color="from-sky-300 to-indigo-400"
         fallbackBg="#7dd3fc"

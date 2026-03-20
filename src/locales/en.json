@@ -1,0 +1,98 @@
+{
+  "app": {
+    "title": "MathFun",
+    "subtitle": "Fun arithmetic training to improve calculation speed",
+    "footer": "Addition & Subtraction within 20 | Comparison | Fun Practice"
+  },
+  "home": {
+    "timedChallenge": "Timed Challenge",
+    "timedDescription": "Complete as many questions as possible in 60 seconds",
+    "challengeMode": "Challenge Mode",
+    "challengeDescription": "Correct answers build energy, wrong answers cost health",
+    "practiceMode": "Practice Mode",
+    "practiceDescription": "Choose question types, practice without pressure"
+  },
+  "stats": {
+    "highScore": "High Score",
+    "longestStreak": "Longest Streak",
+    "todayAccuracy": "Today's Accuracy",
+    "totalQuestions": "Total Questions"
+  },
+  "timedMode": {
+    "title": "Timed Challenge",
+    "description": "Choose duration, complete as many questions as possible!",
+    "minutes": "{{count}} minute",
+    "highScore": "High Score:",
+    "start": "Start Challenge",
+    "exit": "Exit"
+  },
+  "challengeMode": {
+    "title": "Challenge Mode",
+    "description": "Correct answers build energy, wrong answers cost health! Survive to the end!",
+    "health": "Health:",
+    "energy": "Energy:",
+    "levelUp": "Level Up",
+    "start": "Start Challenge",
+    "exit": "Exit"
+  },
+  "practiceMode": {
+    "title": "Practice Mode",
+    "description": "Choose the question types you want to practice",
+    "addition": "Addition",
+    "subtraction": "Subtraction",
+    "comparison": "Comparison",
+    "start": "Start Practice",
+    "selectType": "Please select at least one question type",
+    "exit": "Exit"
+  },
+  "timedPlay": {
+    "gameOver": "Game Over",
+    "score": "Score",
+    "accuracy": "Accuracy",
+    "correct": "Correct",
+    "total": "Total",
+    "progress": "Progress"
+  },
+  "challengePlay": {
+    "gameOver": "Game Over",
+    "score": "Score",
+    "levelReached": "Level Reached",
+    "correct": "Correct",
+    "bestStreak": "Best Streak",
+    "progress": "Progress"
+  },
+  "gameOver": {
+    "newRecord": "New Record!",
+    "highScore": "High Score:",
+    "playAgain": "Play Again",
+    "backToSelection": "Back to Selection"
+  },
+  "gameHeader": {
+    "level": "Level {{level}}",
+    "progress": "Progress",
+    "exit": "Exit"
+  },
+  "questionCard": {
+    "addition": "Addition",
+    "subtraction": "Subtraction",
+    "comparison": "Comparison",
+    "greaterThan": "Greater than",
+    "lessThan": "Less than",
+    "equalTo": "Equal to",
+    "question": "Question"
+  },
+  "numberPicker": {
+    "selectAnswer": "Select your answer"
+  },
+  "progressBar": {
+    "progress": "Progress"
+  },
+  "timer": {
+    "timeUp": "Time's Up"
+  },
+  "gameProgressBar": {
+    "answerProgress": "Answer Progress",
+    "correct": "Correct",
+    "incorrect": "Incorrect"
+  }
+}

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Icon } from './Icon';
 
 interface StatItem {
@@ -27,6 +28,7 @@ export function GameOver({
   onExit,
   theme = 'orange',
 }: GameOverProps) {
+  const { t } = useTranslation();
   const themeStyles = {
     rose: {
       bg: 'from-amber-50 via-orange-50 to-amber-100',
@@ -97,7 +99,7 @@ export function GameOver({
           >
             <div className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-4 py-2 text-base font-bold text-yellow-900 shadow-lg">
               <Icon icon="mdi:trophy" className="text-lg" />
-              新纪录！
+              {t('gameOver.newRecord')}
               <Icon icon="mdi:trophy" className="text-lg" />
             </div>
           </motion.div>
@@ -107,7 +109,7 @@ export function GameOver({
         {highScore !== undefined && highScore > 0 && !isNewHighScore && (
           <div className="mb-3">
             <p className="text-sm font-medium text-amber-600 md:text-base">
-              最高分: <span className="font-bold text-amber-800">{highScore}</span>
+              {t('gameOver.highScore')} <span className="font-bold text-amber-800">{highScore}</span>
             </p>
           </div>
         )}
@@ -120,7 +122,7 @@ export function GameOver({
             onClick={onRestart}
             className={`rounded-full ${style.button} px-6 py-3 text-base font-bold shadow-lg transition-all md:px-8 md:py-4 md:text-xl`}
           >
-            再来一次
+            {t('gameOver.playAgain')}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -128,7 +130,7 @@ export function GameOver({
             onClick={onExit}
             className={`rounded-full ${style.secondaryButton} px-6 py-3 text-base font-bold shadow-lg transition-all md:px-8 md:py-4 md:text-xl`}
           >
-            返回选择
+            {t('gameOver.backToSelection')}
           </motion.button>
         </div>
       </motion.div>

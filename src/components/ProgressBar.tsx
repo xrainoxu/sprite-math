@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 interface ProgressBarProps {
   value: number;
@@ -8,6 +9,7 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ value, max, color = 'blue', showLabel = true }: ProgressBarProps) {
+  const { t } = useTranslation();
   const percentage = Math.min((value / max) * 100, 100);
 
   const colorClasses = {
@@ -21,7 +23,7 @@ export function ProgressBar({ value, max, color = 'blue', showLabel = true }: Pr
     <div className="w-full">
       {showLabel && (
         <div className="mb-2 flex justify-between text-sm font-medium text-purple-700 md:text-base lg:text-lg">
-          <span>进度</span>
+          <span>{t('progressBar.progress')}</span>
           <span>
             {value} / {max}
           </span>

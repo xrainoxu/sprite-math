@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { StatsPanel } from '../components/StatsPanel';
 import { getStats } from '../utils/storage';
 import { Icon } from '../components/Icon';
 
 export function Home() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const stats = getStats();
 
@@ -18,9 +20,9 @@ export function Home() {
       >
         <h1 className="mb-4 text-6xl font-bold text-indigo-600 drop-shadow-sm">
           <Icon icon="mdi:calculator-variant" className="mr-3 text-5xl vertical-align: middle" />
-          MathFun
+          {t('app.title')}
         </h1>
-        <p className="text-xl text-indigo-500/80">趣味算术训练，提升计算速度</p>
+        <p className="text-xl text-indigo-500/80">{t('app.subtitle')}</p>
       </motion.div>
 
       {/* 统计面板 */}
@@ -38,8 +40,8 @@ export function Home() {
         {/* 计时挑战 - 明亮橙黄 */}
         <ModeCard
           icon="mdi:timer-sand"
-          title="计时挑战"
-          description="60秒内完成尽可能多的题目"
+          title={t('home.timedChallenge')}
+          description={t('home.timedDescription')}
           color="from-amber-300 to-orange-400"
           fallbackBg="#fcd34d"
           onClick={() => navigate('/timed')}
@@ -48,8 +50,8 @@ export function Home() {
         {/* 闯关模式 - 明快紫粉 */}
         <ModeCard
           icon="mdi:trophy"
-          title="闯关模式"
-          description="答对积累能量，答错扣血"
+          title={t('home.challengeMode')}
+          description={t('home.challengeDescription')}
           color="from-violet-300 to-fuchsia-400"
           fallbackBg="#c4b5fd"
           onClick={() => navigate('/challenge')}
@@ -58,8 +60,8 @@ export function Home() {
         {/* 自由练习 - 清新绿 */}
         <ModeCard
           icon="mdi:target"
-          title="自由练习"
-          description="选择题型，无压力练习"
+          title={t('home.practiceMode')}
+          description={t('home.practiceDescription')}
           color="from-emerald-300 to-teal-400"
           fallbackBg="#6ee7b7"
           onClick={() => navigate('/practice')}
@@ -73,7 +75,7 @@ export function Home() {
         transition={{ delay: 0.4 }}
         className="mt-12 text-center text-indigo-400/60"
       >
-        20以内加减法 | 大小判断 | 趣味训练
+        {t('app.footer')}
       </motion.p>
     </div>
   );

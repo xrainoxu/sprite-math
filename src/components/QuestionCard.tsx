@@ -1,5 +1,6 @@
 import type { Question } from '../utils/math';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Icon } from './Icon';
 
 interface QuestionCardProps {
@@ -17,6 +18,7 @@ export function QuestionCard({
   selectedAnswer,
   onSelectAnswer,
 }: QuestionCardProps) {
+  const { t } = useTranslation();
   // 卡通明亮配色
   const getTypeColor = () => {
     switch (question.type) {
@@ -60,13 +62,13 @@ export function QuestionCard({
   const getTypeLabel = () => {
     switch (question.type) {
       case 'addition':
-        return '加法';
+        return t('questionCard.addition');
       case 'subtraction':
-        return '减法';
+        return t('questionCard.subtraction');
       case 'comparison':
-        return '大小判断';
+        return t('questionCard.comparison');
       default:
-        return '题目';
+        return t('questionCard.question');
     }
   };
 
@@ -208,7 +210,7 @@ export function QuestionCard({
                   {showFeedback && isCorrectAnswer ? op : op}
                 </motion.button>
                 <span className={`text-sm md:text-lg ${labelClass}`}>
-                  {index === 0 ? '大于' : index === 1 ? '小于' : '等于'}
+                  {index === 0 ? t('questionCard.greaterThan') : index === 1 ? t('questionCard.lessThan') : t('questionCard.equalTo')}
                 </span>
               </div>
             );

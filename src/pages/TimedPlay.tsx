@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { QuestionCard } from '../components/QuestionCard';
 import { GameHeader } from '../components/GameHeader';
 import { GameOver } from '../components/GameOver';
@@ -20,6 +21,7 @@ interface Feedback {
 }
 
 export function TimedPlay() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -123,12 +125,12 @@ export function TimedPlay() {
 
     return (
       <GameOver
-        title="游戏结束"
+        title={t('timedPlay.gameOver')}
         stats={[
-          { value: score, label: '得分', color: 'text-amber-600', bgColor: 'bg-amber-100' },
-          { value: `${accuracy}%`, label: '正确率', color: 'text-emerald-600', bgColor: 'bg-emerald-100' },
-          { value: correctCount, label: '答对', color: 'text-blue-600', bgColor: 'bg-blue-100' },
-          { value: totalCount, label: '总题数', color: 'text-violet-600', bgColor: 'bg-violet-100' },
+          { value: score, label: t('timedPlay.score'), color: 'text-amber-600', bgColor: 'bg-amber-100' },
+          { value: `${accuracy}%`, label: t('timedPlay.accuracy'), color: 'text-emerald-600', bgColor: 'bg-emerald-100' },
+          { value: correctCount, label: t('timedPlay.correct'), color: 'text-blue-600', bgColor: 'bg-blue-100' },
+          { value: totalCount, label: t('timedPlay.total'), color: 'text-violet-600', bgColor: 'bg-violet-100' },
         ]}
         isNewHighScore={score >= highScore && score > 0}
         highScore={highScore}
