@@ -81,7 +81,7 @@ export function QuestionCard({
         </motion.h2>
 
         {/* 答案选项按钮 - 平铺显示 */}
-        <div className="grid grid-cols-6 md:grid-cols-11 gap-2 md:gap-3">
+        <div className="grid grid-cols-7 md:grid-cols-11 gap-2 md:gap-3">
           {answerOptions.map((num) => {
             const isSelected = selectedAnswer === String(num);
             const isCorrectAnswer = question.answer === String(num);
@@ -105,7 +105,7 @@ export function QuestionCard({
                 whileTap={!showFeedback ? { scale: 0.95 } : {}}
                 onClick={() => !showFeedback && handleNumberSelect(num)}
                 disabled={showFeedback}
-                className={`flex h-11 w-11 items-center justify-center rounded-xl text-base font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                className={`flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
               >
                 {num}
               </motion.button>
