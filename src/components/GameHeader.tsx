@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 import { Timer } from './Timer';
 import { ScoreDisplay } from './ScoreDisplay';
+import { GameProgressBar } from './GameProgressBar';
 
 interface GameHeaderProps {
   /** 退出按钮回调 */
@@ -20,12 +21,16 @@ interface GameHeaderProps {
   health?: number;
   /** 最大生命值 */
   maxHealth?: number;
-  /** 当前能量值（不传则不显示） */
-  energy?: number;
-  /** 最大能量值 */
-  maxEnergy?: number;
+  /** 进度条当前值 */
+  progressValue?: number;
+  /** 进度条最大值 */
+  progressMax?: number;
+  /** 进度条标签 */
+  progressLabel?: string;
   /** 主题颜色 */
   theme?: 'rose' | 'violet' | 'orange';
+  /** 自定义左侧内容（替换计时器/关卡/生命值） */
+  leftContent?: ReactNode;
   /** 自定义右侧内容（替换默认的分数显示） */
   rightContent?: ReactNode;
 }
@@ -39,41 +44,90 @@ export function GameHeader({
   level,
   health,
   maxHealth = 3,
-  energy,
-  maxEnergy = 100,
+  progressValue,
+  progressMax,
+  progressLabel = '进度',
   theme = 'rose',
+  leftContent,
   rightContent,
 }: GameHeaderProps) {
   const themeClasses = {
     rose: {
       bg: 'from-rose-100 to-pink-100',
       exitBtn: 'bg-rose-400 hover:bg-rose-500',
-      levelBg: 'bg-white',
-      levelText: 'text-rose-700',
     },
     violet: {
       bg: 'from-violet-100 to-purple-100',
       exitBtn: 'bg-violet-400 hover:bg-violet-500',
-      levelBg: 'bg-white',
-      levelText: 'text-violet-700',
     },
     orange: {
       bg: 'from-amber-100 to-orange-100',
       exitBtn: 'bg-orange-400 hover:bg-orange-500',
-      levelBg: 'bg-white',
-      levelText: 'text-orange-600',
     },
   };
 
   const themeStyle = themeClasses[theme];
 
+  // 渲染默认的左侧内容
+  const renderDefaultLeftContent = () => {
+    // 关卡显示
+    if (level) {
+      return (
+        <div className="flex items-center gap-2">
+          <div className="rounded-full bg-white px-3 py-1 shadow-md md:px-4 md:py-2">
+            <span className={`text-sm font-bold text-${theme === 'orange' ? 'orange' : 'violet'}-700 md:text-base`}>
+              第 {level} 关
+            </span>
+          </div>
+          {/* 生命值 */}
+          {health !== undefined && (
+            <div className="flex gap-0.5">
+              {Array.from({ length: maxHealth }).map((_, i) => (
+                <motion.span
+                  key={i}
+                  animate={i < health ? { scale: [1, 1.2, 1] } : {}}
+                  className={`text-lg md:text-xl ${i < health ? '' : 'opacity-30'}`}
+                >
+                  ❤️
+                </motion.span>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // 计时器
+    if (timerSeconds && onTimeUp) {
+      return <Timer seconds={timerSeconds} onTimeUp={onTimeUp} />;
+    }
+
+    return null;
+  };
+
+  // 进度条
+  const renderProgress = () => {
+    if (progressValue === undefined || !progressMax) return null;
+    return <GameProgressBar value={progressValue} max={progressMax} label={progressLabel} />;
+  };
+
   return (
     <div
       className={`flex shrink-0 items-center justify-between rounded-b-2xl bg-gradient-to-r ${themeStyle.bg} px-3 py-2 shadow-md md:px-4 md:py-2`}
     >
-      {/* 左侧：退出按钮 + 计时器/生命值 */}
-      <div className="flex items-center gap-2 md:gap-3">
-        {/* 退出按钮 */}
+      {/* 左侧：自定义内容或默认的关卡/计时器 */}
+      <div className="flex shrink-0 items-center gap-2 md:gap-3">
+        {leftContent || renderDefaultLeftContent()}
+      </div>
+
+      {/* 中间：进度条 */}
+      <div className="flex-1 px-2 md:px-3">
+        {renderProgress()}
+      </div>
+
+      {/* 右侧：分数显示 + 退出按钮 */}
+      <div className="flex shrink-0 items-center gap-2 md:gap-3">
+        {rightContent || <ScoreDisplay score={score} streak={streak} />}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -82,39 +136,7 @@ export function GameHeader({
         >
           退出
         </motion.button>
-
-        {/* 计时器 */}
-        {timerSeconds && onTimeUp && (
-          <Timer seconds={timerSeconds} onTimeUp={onTimeUp} />
-        )}
-
-        {/* 生命值 */}
-        {health !== undefined && (
-          <div className="flex gap-0.5">
-            {Array.from({ length: maxHealth }).map((_, i) => (
-              <motion.span
-                key={i}
-                animate={i < health ? { scale: [1, 1.2, 1] } : {}}
-                className={`text-lg md:text-xl lg:text-2xl ${i < health ? '' : 'opacity-30'}`}
-              >
-                ❤️
-              </motion.span>
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* 中间：关卡显示 */}
-      {level && (
-        <div className={`rounded-full ${themeStyle.levelBg} px-3 py-1 shadow-md md:px-4 md:py-2`}>
-          <span className={`text-sm font-bold ${themeStyle.levelText} md:text-base lg:text-lg`}>
-            第 {level} 关
-          </span>
-        </div>
-      )}
-
-      {/* 右侧：自定义内容或分数显示 */}
-      {rightContent || <ScoreDisplay score={score} streak={streak} />}
     </div>
   );
 }

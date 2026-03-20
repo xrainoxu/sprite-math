@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { GameHeader } from '../components/GameHeader';
-import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateHighestScore, recordAnswer } from '../utils/storage';
@@ -173,6 +172,8 @@ export function TimedPlay() {
         onTimeUp={handleTimeUp}
         score={score}
         streak={streak}
+        progressValue={correctCount}
+        progressMax={20}
         theme="rose"
       />
 
@@ -196,11 +197,6 @@ export function TimedPlay() {
             </div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* 底部 - 进度条 */}
-      <div className="shrink-0 rounded-t-2xl bg-gradient-to-r from-rose-100 to-pink-100 px-4 py-2 shadow-md md:px-6 md:py-3">
-        <GameProgressBar value={correctCount} max={20} label="答题进度" />
       </div>
     </div>
   );

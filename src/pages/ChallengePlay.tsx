@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { GameHeader } from '../components/GameHeader';
-import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateLongestStreak, recordAnswer } from '../utils/storage';
@@ -182,6 +181,8 @@ export function ChallengePlay() {
         level={level}
         health={health}
         maxHealth={MAX_HEALTH}
+        progressValue={energy}
+        progressMax={MAX_ENERGY}
         theme="violet"
       />
 
@@ -205,11 +206,6 @@ export function ChallengePlay() {
             </div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* 底部 - 能量条 */}
-      <div className="shrink-0 rounded-t-2xl bg-gradient-to-r from-violet-100 to-purple-100 px-4 py-2 shadow-md md:px-6 md:py-3">
-        <GameProgressBar value={energy} max={MAX_ENERGY} label="能量" />
       </div>
     </div>
   );

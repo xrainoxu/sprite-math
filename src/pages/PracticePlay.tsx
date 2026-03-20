@@ -5,7 +5,6 @@ import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { ScoreDisplay } from '../components/ScoreDisplay';
 import { GameHeader } from '../components/GameHeader';
-import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question, QuestionType } from '../utils/math';
 import { recordAnswer } from '../utils/storage';
@@ -90,15 +89,15 @@ export function PracticePlay() {
         onExit={() => navigate('/practice')}
         score={score}
         streak={streak}
+        progressValue={correctCount}
+        progressMax={totalCount || 1}
         theme="orange"
-        rightContent={
-          <div className="flex items-center gap-3 md:gap-4">
-            <ScoreDisplay score={score} streak={streak} />
-            <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
-              <span className="font-bold text-orange-600 md:text-lg">{accuracy}%</span>
-            </div>
+        leftContent={
+          <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
+            <span className="font-bold text-orange-600 md:text-lg">{accuracy}%</span>
           </div>
         }
+        rightContent={<ScoreDisplay score={score} streak={streak} />}
       />
 
       {/* 中间区域 - 题目和答题区，不滚动 */}
@@ -121,11 +120,6 @@ export function PracticePlay() {
             </div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* 底部统计 */}
-      <div className="shrink-0 rounded-t-2xl bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-2 shadow-md md:px-6 md:py-3">
-        <GameProgressBar value={correctCount} label="答对题数" />
       </div>
     </div>
   );
