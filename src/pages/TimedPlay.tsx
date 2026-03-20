@@ -189,6 +189,8 @@ export function TimedPlay() {
         streak={streak}
         progressValue={totalCount}
         progressMax={questionTarget}
+        progressCorrectCount={correctCount}
+        progressWrongCount={totalCount - correctCount}
         theme="rose"
       />
 

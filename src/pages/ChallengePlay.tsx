@@ -27,6 +27,7 @@ export function ChallengePlay() {
   const [energy, setEnergy] = useState(0);
   const [level, setLevel] = useState(1);
   const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
   const [feedback, setFeedback] = useState<{ show: boolean; isCorrect: boolean }>({
     show: false,
     isCorrect: false,
@@ -90,6 +91,7 @@ export function ChallengePlay() {
       } else {
         playWrongSound();
         setStreak(0);
+        setWrongCount((w) => w + 1);
         setHealth((h) => {
           const newHealth = h - 1;
           if (newHealth <= 0) {
@@ -182,6 +184,8 @@ export function ChallengePlay() {
         maxHealth={MAX_HEALTH}
         progressValue={energy}
         progressMax={MAX_ENERGY}
+        progressCorrectCount={correctCount}
+        progressWrongCount={wrongCount}
         theme="violet"
       />
 

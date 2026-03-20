@@ -27,6 +27,10 @@ interface GameHeaderProps {
   progressMax?: number;
   /** 进度条标签 */
   progressLabel?: string;
+  /** 进度条答对数量 */
+  progressCorrectCount?: number;
+  /** 进度条答错数量 */
+  progressWrongCount?: number;
   /** 主题颜色 */
   theme?: 'rose' | 'violet' | 'orange';
   /** 自定义左侧内容（替换计时器/关卡/生命值） */
@@ -47,6 +51,8 @@ export function GameHeader({
   progressValue,
   progressMax,
   progressLabel = '进度',
+  progressCorrectCount,
+  progressWrongCount,
   theme = 'rose',
   leftContent,
   rightContent,
@@ -108,7 +114,15 @@ export function GameHeader({
   // 进度条
   const renderProgress = () => {
     if (progressValue === undefined || !progressMax) return null;
-    return <GameProgressBar value={progressValue} max={progressMax} label={progressLabel} />;
+    return (
+      <GameProgressBar
+        value={progressValue}
+        max={progressMax}
+        label={progressLabel}
+        correctCount={progressCorrectCount}
+        wrongCount={progressWrongCount}
+      />
+    );
   };
 
   return (
