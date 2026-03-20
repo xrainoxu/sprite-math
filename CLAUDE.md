@@ -63,8 +63,10 @@ sprite-math/
 │   │
 │   ├── components/              # 公共组件
 │   │   ├── AnswerInput.tsx      # 答案输入组件
+│   │   ├── GameHeader.tsx       # 游戏顶部栏组件
+│   │   ├── GameProgressBar.tsx  # 游戏进度条组件
 │   │   ├── Icon.tsx             # 图标组件（iconify）
-│   │   ├── ProgressBar.tsx      # 进度条组件
+│   │   ├── ProgressBar.tsx      # 进度条组件（已废弃，请使用 GameProgressBar）
 │   │   ├── QuestionCard.tsx     # 题目卡片组件
 │   │   ├── ScoreDisplay.tsx     # 分数显示组件
 │   │   ├── StatsPanel.tsx       # 统计面板组件
@@ -152,7 +154,101 @@ pnpm build
 
 ## 其他说明
 
-- 背景使用温暖的浅色渐变：`linear-gradient(180deg, #E8F4FD 0%, #FEF9E7 50%, #E8F8F5 100%)`
+- 背景使用温暖的浅色渐变：`linear-gradient(180deg, #FFF8E7 0%, #FFFBF0 50%, #FFF5E6 100%)`
 - 动画效果使用 Framer Motion
 - 图标使用 Iconify（iconify-react）
 - 音效使用 Web Audio API 生成
+
+## 游戏页面组件
+
+### GameHeader 组件
+
+游戏页面的统一顶部栏组件，整合了退出按钮、计时器/关卡/生命值、分数显示、进度条等功能。
+
+**位置**：`src/components/GameHeader.tsx`
+
+**属性接口**：
+```typescript
+interface GameHeaderProps {
+  onExit: () => void;                    // 退出按钮回调
+  timerSeconds?: number;                 // 计时器倒计时秒数
+  onTimeUp?: () => void;                 // 计时器结束回调
+  score: number;                         // 当前分数
+  streak: number;                        // 当前连击数
+  level?: number;                        // 当前关卡
+  health?: number;                       // 当前生命值
+  maxHealth?: number;                    // 最大生命值（默认3）
+  progressValue?: number;                // 进度条当前值
+  progressMax?: number;                 // 进度条最大值
+  progressLabel?: string;               // 进度条标签（默认"进度"）
+  theme?: 'rose' | 'violet' | 'orange'; // 主题颜色
+  leftContent?: ReactNode;               // 自定义左侧内容
+  rightContent?: ReactNode;              // 自定义右侧内容
+}
+```
+
+**使用示例**：
+```tsx
+<GameHeader
+  onExit={() => navigate('/timed')}
+  timerSeconds={300}
+  onTimeUp={handleTimeUp}
+  score={score}
+  streak={streak}
+  progressValue={correctCount}
+  progressMax={20}
+  theme="rose"
+/>
+```
+
+**布局结构**：
+```
+[左侧: 计时器/关卡+生命值/自定义] [中间: 进度条] [右侧: 分数 + 退出按钮]
+```
+
+### GameProgressBar 组件
+
+游戏页面使用的进度条组件，文字显示在进度条内部。
+
+**位置**：`src/components/GameProgressBar.tsx`
+
+**属性接口**：
+```typescript
+interface GameProgressBarProps {
+  value: number;    // 当前值
+  max?: number;     // 最大值（不传则只显示数值，无进度填充）
+  label?: string;   // 标签文字（默认"进度"）
+}
+```
+
+**视觉效果**：
+- 高度：`h-8` (mobile) / `h-9` (md)
+- 圆角：`rounded-xl`
+- 边框：`border-2 border-white/50`
+- 背景：`bg-white/30`（半透明白色）
+- 进度填充：渐变色 `from-violet-400 to-purple-500`
+- 文字：居中显示 `text-xs font-bold text-purple-700`
+
+**显示效果**：
+```
+┌─────────────────────────────────────────┐
+│ ████████████ 答题进度: 5/20  ██████████│
+└─────────────────────────────────────────┘
+```
+
+**使用示例**：
+```tsx
+// 带最大值（显示进度条填充）
+<GameProgressBar value={5} max={20} label="答题进度" />
+
+// 无最大值（只显示数值）
+<GameProgressBar value={10} label="答对题数" />
+```
+
+### 三个游戏页面的顶部栏配置
+
+| 页面 | 左侧 | 中间 | 右侧 |
+|------|------|------|------|
+| TimedPlay | 计时器 | 进度条(答题数/20) | 分数 + 退出 |
+| ChallengePlay | 关卡 + 生命值 | 进度条(能量/100) | 分数 + 退出 |
+| PracticePlay | 正确率 | 进度条(答对数/总数) | 分数 + 退出 |
