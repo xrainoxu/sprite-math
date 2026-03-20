@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
-import { AnswerInput } from '../components/AnswerInput';
 import { GameHeader } from '../components/GameHeader';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
@@ -197,11 +196,6 @@ export function ChallengePlay() {
                 isCorrect={feedback.isCorrect}
                 selectedAnswer={selectedAnswer}
                 onSelectAnswer={handleSelectAnswer}
-              />
-              <AnswerInput
-                question={question}
-                onAnswer={handleAnswer}
-                disabled={feedback.show}
               />
             </div>
           )}

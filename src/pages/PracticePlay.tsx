@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
-import { AnswerInput } from '../components/AnswerInput';
 import { ScoreDisplay } from '../components/ScoreDisplay';
 import { GameHeader } from '../components/GameHeader';
 import { generateQuestion, checkAnswer } from '../utils/math';
@@ -111,11 +110,6 @@ export function PracticePlay() {
                 isCorrect={feedback.isCorrect}
                 selectedAnswer={selectedAnswer}
                 onSelectAnswer={handleSelectAnswer}
-              />
-              <AnswerInput
-                question={question}
-                onAnswer={handleAnswer}
-                disabled={feedback.show}
               />
             </div>
           )}

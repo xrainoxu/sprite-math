@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
-import { AnswerInput } from '../components/AnswerInput';
 import { GameHeader } from '../components/GameHeader';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
@@ -22,7 +21,10 @@ interface Feedback {
 export function TimedPlay() {
   const navigate = useNavigate();
   const location = useLocation();
-  const duration = Number(new URLSearchParams(location.search).get('duration')) || 60;
+  const searchParams = new URLSearchParams(location.search);
+  const duration = Number(searchParams.get('duration')) || 60;
+  // 根据时间推导题目数量: 1分钟=50, 2分钟=100, 3分钟=150, 5分钟=250
+  const questionTarget = Math.floor((duration / 60) * 50);
 
   const [gameState, setGameState] = useState<'playing' | 'finished'>('playing');
   const [question, setQuestion] = useState<Question | null>(null);
@@ -59,6 +61,8 @@ export function TimedPlay() {
       const isCorrect = checkAnswer(question, answer);
       setFeedback({ show: true, isCorrect });
 
+      let newTotalCount = totalCount + 1;
+
       if (isCorrect) {
         playCorrectSound();
         setScore((s) => s + 10 + streak * 2);
@@ -76,13 +80,24 @@ export function TimedPlay() {
       setTotalCount((t) => t + 1);
       recordAnswer(isCorrect, 'timed');
 
+      // 检查是否达到目标题目数量
+      if (newTotalCount >= questionTarget) {
+        setTimeout(() => {
+          setGameState('finished');
+          playGameOverSound();
+          const stats = updateHighestScore(score + (isCorrect ? 10 + streak * 2 : 0));
+          setHighScore(stats.highestScore);
+        }, 500);
+        return;
+      }
+
       setTimeout(() => {
         setQuestion(generateQuestion());
         setFeedback({ show: false, isCorrect: false });
         setSelectedAnswer('');
       }, 500);
     },
-    [question, feedback.show, streak]
+    [question, feedback.show, streak, totalCount, questionTarget, score]
   );
 
   const handleSelectAnswer = useCallback((answer: string) => {
@@ -172,8 +187,8 @@ export function TimedPlay() {
         onTimeUp={handleTimeUp}
         score={score}
         streak={streak}
-        progressValue={correctCount}
-        progressMax={20}
+        progressValue={totalCount}
+        progressMax={questionTarget}
         theme="rose"
       />
 
@@ -188,11 +203,6 @@ export function TimedPlay() {
                 isCorrect={feedback.isCorrect}
                 selectedAnswer={selectedAnswer}
                 onSelectAnswer={handleSelectAnswer}
-              />
-              <AnswerInput
-                question={question}
-                onAnswer={handleAnswer}
-                disabled={feedback.show}
               />
             </div>
           )}

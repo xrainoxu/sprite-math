@@ -53,7 +53,7 @@ export function TimedMode() {
         </p>
 
         {/* 时长选择 */}
-        <div className="mb-6 flex flex-wrap justify-center gap-3">
+        <div className="mb-4 flex flex-wrap justify-center gap-3">
           {TIME_OPTIONS.map((option) => (
             <motion.button
               key={option.seconds}
