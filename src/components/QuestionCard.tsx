@@ -95,20 +95,20 @@ export function QuestionCard({
           {['>', '<', '='].map((op, index) => {
             const isSelected = selectedAnswer === op;
             const isCorrectAnswer = question.answer === op;
-            let btnClass = 'bg-white/20 hover:bg-white/30 text-white';
-            let labelClass = 'text-white/60';
+            let btnClass = 'bg-white/30 hover:bg-white/50 text-white ring-2 ring-white/30';
+            let labelClass = 'text-white/80';
 
             if (showFeedback) {
               if (isCorrectAnswer) {
-                btnClass = 'bg-green-500 ring-4 ring-green-300';
-                labelClass = 'text-green-300';
+                btnClass = 'bg-green-400 ring-4 ring-green-200';
+                labelClass = 'text-green-700 font-bold';
               } else if (isSelected && !isCorrectAnswer) {
-                btnClass = 'bg-red-500 ring-4 ring-red-300';
-                labelClass = 'text-red-300';
+                btnClass = 'bg-red-400 ring-4 ring-red-200';
+                labelClass = 'text-red-700 font-bold';
               }
             } else if (isSelected) {
-              btnClass = 'bg-white text-indigo-600 ring-4 ring-white';
-              labelClass = 'text-white';
+              btnClass = 'bg-white text-purple-600 ring-4 ring-purple-300';
+              labelClass = 'text-white font-bold';
             }
 
             return (

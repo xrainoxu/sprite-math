@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { ScoreDisplay } from '../components/ScoreDisplay';
+import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question, QuestionType } from '../utils/math';
 import { recordAnswer } from '../utils/storage';
@@ -83,21 +84,21 @@ export function PracticePlay() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      {/* 顶部栏 */}
-      <div className="flex shrink-0 items-center justify-between px-2 py-2 md:px-4 md:py-3">
+      {/* 顶部栏 - 柔和橙黄背景 */}
+      <div className="flex shrink-0 items-center justify-between rounded-b-3xl bg-gradient-to-r from-amber-100 to-orange-100 px-2 py-3 shadow-md md:px-4 md:py-4">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/practice')}
-          className="rounded-full bg-amber-200 px-2 py-1.5 text-sm text-amber-800 shadow-md hover:bg-amber-300 md:px-3 md:py-2 md:text-base"
+          className="rounded-full bg-orange-400 px-3 py-1.5 text-sm font-bold text-white shadow-md hover:bg-orange-500 md:px-4 md:py-2 md:text-base"
         >
           退出
         </motion.button>
 
         <ScoreDisplay score={score} streak={streak} />
 
-        <div className="rounded-full bg-amber-200 px-2 py-1.5 shadow-md md:px-3 md:py-2">
-          <span className="font-bold text-amber-800 md:text-lg">{accuracy}%</span>
+        <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
+          <span className="font-bold text-orange-600 md:text-lg">{accuracy}%</span>
         </div>
       </div>
 
@@ -123,11 +124,9 @@ export function PracticePlay() {
         </AnimatePresence>
       </div>
 
-      {/* 底部统计，不遮挡答题区 */}
-      <div className="shrink-0 px-2 py-2 md:px-4 md:py-3">
-        <div className="text-center text-xs text-amber-700 md:text-sm">
-          已答题: {totalCount} | 正确: {correctCount}
-        </div>
+      {/* 底部统计 */}
+      <div className="shrink-0 rounded-t-3xl bg-gradient-to-r from-amber-100 to-orange-100 px-4 py-3 shadow-md md:px-6 md:py-4">
+        <GameProgressBar value={correctCount} label="答对题数" />
       </div>
     </div>
   );

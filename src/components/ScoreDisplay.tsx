@@ -9,14 +9,14 @@ interface ScoreDisplayProps {
 export function ScoreDisplay({ score, streak, showCombo = true }: ScoreDisplayProps) {
   return (
     <div className="flex items-center gap-4 md:gap-6">
-      {/* 分数 */}
-      <div className="flex items-center gap-2">
+      {/* 分数 - 奶白色背景+深紫色文字，突出醒目 */}
+      <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2 shadow-md md:px-5 md:py-3">
         <span className="text-3xl md:text-4xl lg:text-5xl">⭐</span>
         <motion.span
           key={score}
           initial={{ scale: 1.3, color: '#fbbf24' }}
-          animate={{ scale: 1, color: '#fff' }}
-          className="text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+          animate={{ scale: 1, color: '#6B21A8' }}
+          className="text-3xl font-bold text-purple-800 md:text-4xl lg:text-5xl"
         >
           {score}
         </motion.span>
@@ -41,7 +41,7 @@ export function ScoreDisplay({ score, streak, showCombo = true }: ScoreDisplayPr
             >
               🔥
             </motion.span>
-            <span className="text-xl font-bold text-orange-300 md:text-2xl lg:text-3xl">
+            <span className="text-xl font-bold text-orange-500 md:text-2xl lg:text-3xl">
               {streak} 连击!
             </span>
           </motion.div>

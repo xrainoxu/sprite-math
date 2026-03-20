@@ -20,14 +20,14 @@ export function ProgressBar({ value, max, color = 'blue', showLabel = true }: Pr
   return (
     <div className="w-full">
       {showLabel && (
-        <div className="mb-2 flex justify-between text-sm font-medium text-white/80 md:text-base lg:text-lg">
+        <div className="mb-2 flex justify-between text-sm font-medium text-purple-700 md:text-base lg:text-lg">
           <span>进度</span>
           <span>
             {value} / {max}
           </span>
         </div>
       )}
-      <div className="h-4 overflow-hidden rounded-full bg-white/20 md:h-5 lg:h-6">
+      <div className="h-4 overflow-hidden rounded-full bg-white shadow-inner md:h-5 lg:h-6">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}

@@ -5,7 +5,7 @@ import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { Timer } from '../components/Timer';
 import { ScoreDisplay } from '../components/ScoreDisplay';
-import { ProgressBar } from '../components/ProgressBar';
+import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateHighestScore, recordAnswer } from '../utils/storage';
@@ -167,14 +167,14 @@ export function TimedPlay() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      {/* 顶部栏 - 退出按钮和计时器放左边，分数放右边 */}
-      <div className="flex shrink-0 items-center justify-between px-2 py-2 md:px-4 md:py-3">
+      {/* 顶部栏 - 柔和粉蓝背景 */}
+      <div className="flex shrink-0 items-center justify-between rounded-b-3xl bg-gradient-to-r from-rose-100 to-pink-100 px-2 py-3 shadow-md md:px-4 md:py-4">
         <div className="flex items-center gap-2 md:gap-3">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/timed')}
-            className="rounded-full bg-white/20 px-2 py-1.5 text-sm text-white backdrop-blur-sm hover:bg-white/30 md:px-3 md:py-2 md:text-base"
+            className="rounded-full bg-rose-400 px-3 py-1.5 text-sm font-bold text-white shadow-md hover:bg-rose-500 md:px-4 md:py-2 md:text-base"
           >
             退出
           </motion.button>
@@ -205,17 +205,9 @@ export function TimedPlay() {
         </AnimatePresence>
       </div>
 
-      {/* 底部 - 进度条和统计，不遮挡答题区 */}
-      <div className="shrink-0 px-2 py-2 md:px-4 md:py-3">
-        <ProgressBar
-          value={correctCount}
-          max={20}
-          color="green"
-          showLabel={false}
-        />
-        <div className="mt-1 text-center text-xs text-white/60 md:text-sm">
-          已答题: {totalCount} | 正确: {correctCount}
-        </div>
+      {/* 底部 - 进度条 */}
+      <div className="shrink-0 rounded-t-3xl bg-gradient-to-r from-rose-100 to-pink-100 px-4 py-3 shadow-md md:px-6 md:py-4">
+        <GameProgressBar value={correctCount} max={20} label="答题进度" />
       </div>
     </div>
   );

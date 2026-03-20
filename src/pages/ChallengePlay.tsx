@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { QuestionCard } from '../components/QuestionCard';
 import { AnswerInput } from '../components/AnswerInput';
 import { ScoreDisplay } from '../components/ScoreDisplay';
-import { ProgressBar } from '../components/ProgressBar';
+import { GameProgressBar } from '../components/GameProgressBar';
 import { generateQuestion, checkAnswer } from '../utils/math';
 import type { Question } from '../utils/math';
 import { updateLongestStreak, recordAnswer } from '../utils/storage';
@@ -174,8 +174,8 @@ export function ChallengePlay() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      {/* 顶部栏 */}
-      <div className="flex shrink-0 items-center justify-between px-2 py-2 md:px-4 md:py-3">
+      {/* 顶部栏 - 柔和紫蓝背景 */}
+      <div className="flex shrink-0 items-center justify-between rounded-b-3xl bg-gradient-to-r from-violet-100 to-purple-100 px-2 py-3 shadow-md md:px-4 md:py-4">
         <div className="flex items-center gap-2 md:gap-3">
           {/* 生命值 */}
           <div className="flex gap-0.5">
@@ -193,15 +193,15 @@ export function ChallengePlay() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/challenge')}
-            className="rounded-full bg-white/20 px-2 py-1.5 text-sm text-white backdrop-blur-sm hover:bg-white/30 md:px-3 md:py-2 md:text-base"
+            className="rounded-full bg-violet-400 px-3 py-1.5 text-sm font-bold text-white shadow-md hover:bg-violet-500 md:px-4 md:py-2 md:text-base"
           >
             退出
           </motion.button>
         </div>
 
         {/* 关卡 */}
-        <div className="rounded-full bg-white/20 px-2 py-1.5 backdrop-blur-sm md:px-3 md:py-2">
-          <span className="text-base font-bold text-white md:text-lg lg:text-xl">第 {level} 关</span>
+        <div className="rounded-full bg-white px-3 py-1.5 shadow-md md:px-4 md:py-2">
+          <span className="text-base font-bold text-violet-700 md:text-lg lg:text-xl">第 {level} 关</span>
         </div>
 
         <ScoreDisplay score={score} streak={streak} />
@@ -229,14 +229,9 @@ export function ChallengePlay() {
         </AnimatePresence>
       </div>
 
-      {/* 底部 - 能量条，不遮挡答题区 */}
-      <div className="shrink-0 px-2 py-2 md:px-4 md:py-3">
-        <ProgressBar
-          value={energy}
-          max={MAX_ENERGY}
-          color="purple"
-          showLabel={true}
-        />
+      {/* 底部 - 能量条 */}
+      <div className="shrink-0 rounded-t-3xl bg-gradient-to-r from-violet-100 to-purple-100 px-4 py-3 shadow-md md:px-6 md:py-4">
+        <GameProgressBar value={energy} max={MAX_ENERGY} label="能量" />
       </div>
     </div>
   );
