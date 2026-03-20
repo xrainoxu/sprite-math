@@ -4,6 +4,7 @@ interface NumberPickerProps {
   isOpen: boolean;
   onClose: () => void;
   onSelect: (num: number) => void;
+  minNumber?: number;
   maxNumber?: number;
   title?: string;
 }
@@ -12,11 +13,12 @@ export function NumberPicker({
   isOpen,
   onClose,
   onSelect,
+  minNumber = 0,
   maxNumber = 20,
   title = '请选择答案',
 }: NumberPickerProps) {
   // 生成数字数组
-  const numbers = Array.from({ length: maxNumber }, (_, i) => i + 1);
+  const numbers = Array.from({ length: maxNumber - minNumber + 1 }, (_, i) => i + minNumber);
 
   // 处理数字选择
   const handleSelect = (num: number) => {
@@ -51,7 +53,7 @@ export function NumberPicker({
             </div>
 
             {/* 数字网格 */}
-            <div className="grid grid-cols-5 gap-2 md:gap-3">
+            <div className="grid grid-cols-6 gap-2 md:gap-3">
               {numbers.map((num) => (
                 <motion.button
                   key={num}
