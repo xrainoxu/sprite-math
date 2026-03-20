@@ -70,26 +70,26 @@ export function QuestionCard({
 
   const renderCalculationQuestion = () => {
     return (
-      <div className="flex flex-col items-center justify-center gap-3 md:gap-4 lg:gap-8">
+      <div className="flex flex-col items-center justify-center gap-4 md:gap-6 lg:gap-10">
         {/* 题目表达式 */}
         <motion.h2
           key={question.id}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-center text-5xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
+          className="text-center text-6xl font-bold text-white drop-shadow-lg md:text-7xl lg:text-8xl"
         >
           {question.question}
         </motion.h2>
 
         {/* 答案输入按钮 */}
-        <div className="flex flex-col items-center gap-1 md:gap-2">
+        <div className="flex flex-col items-center gap-2 md:gap-3">
           <motion.button
             type="button"
             whileHover={!showFeedback ? { scale: 1.1 } : {}}
             whileTap={!showFeedback ? { scale: 0.95 } : {}}
             onClick={() => !showFeedback && setIsPickerOpen(true)}
             disabled={showFeedback}
-            className={`flex h-16 w-16 items-center justify-center rounded-full text-3xl font-bold shadow-lg transition-all md:h-20 md:w-20 md:text-4xl lg:h-24 lg:w-24 lg:text-5xl ${
+            className={`flex h-20 w-20 items-center justify-center rounded-full text-4xl font-bold shadow-lg transition-all md:h-24 md:w-24 md:text-5xl lg:h-28 lg:w-28 lg:text-6xl ${
               showFeedback
                 ? isCorrect
                   ? 'bg-green-400 ring-4 ring-green-200 text-white'
@@ -99,7 +99,7 @@ export function QuestionCard({
           >
             {showFeedback ? question.answer : '?'}
           </motion.button>
-          <span className="text-sm text-white/80 md:text-base">
+          <span className="text-base text-white/80 md:text-lg">
             {showFeedback ? (isCorrect ? '正确!' : '正确答案: ' + question.answer) : '点击输入'}
           </span>
         </div>
@@ -113,35 +113,35 @@ export function QuestionCard({
     const rightExpr = parts[1] || '';
 
     return (
-      <div className="flex flex-col items-center justify-center gap-3 md:gap-4 lg:gap-8">
+      <div className="flex flex-col items-center justify-center gap-4 md:gap-6 lg:gap-10">
         {/* 表达式行 */}
-        <div className="flex items-center justify-center gap-3 md:gap-4 lg:gap-8">
+        <div className="flex items-center justify-center gap-4 md:gap-6 lg:gap-10">
           {/* 左边表达式 */}
           <motion.span
             key={`left-${question.id}`}
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="text-4xl font-bold text-white drop-shadow-lg md:text-5xl lg:text-6xl"
+            className="text-5xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
           >
             {leftExpr}
           </motion.span>
 
           {/* 圆圈占位符 */}
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white/50 md:h-16 md:w-16 lg:h-20 lg:w-20" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-white/50 md:h-20 md:w-20 lg:h-24 lg:w-24" />
 
           {/* 右边表达式 */}
           <motion.span
             key={`right-${question.id}`}
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="text-4xl font-bold text-white drop-shadow-lg md:text-5xl lg:text-6xl"
+            className="text-5xl font-bold text-white drop-shadow-lg md:text-6xl lg:text-7xl"
           >
             {rightExpr}
           </motion.span>
         </div>
 
         {/* 符号行 */}
-        <div className="flex gap-3 md:gap-4 lg:gap-8">
+        <div className="flex gap-4 md:gap-6 lg:gap-10">
           {['>', '<', '='].map((op, index) => {
             const isSelected = selectedAnswer === op;
             const isCorrectAnswer = question.answer === op;
@@ -162,17 +162,17 @@ export function QuestionCard({
             }
 
             return (
-              <div key={op} className="flex flex-col items-center gap-1 md:gap-2">
+              <div key={op} className="flex flex-col items-center gap-2 md:gap-3">
                 <motion.button
                   whileHover={!showFeedback ? { scale: 1.1 } : {}}
                   whileTap={!showFeedback ? { scale: 0.95 } : {}}
                   onClick={() => !showFeedback && onSelectAnswer?.(op)}
                   disabled={showFeedback}
-                  className={`flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold transition-all md:h-20 md:w-20 md:text-3xl lg:h-24 lg:w-24 lg:text-4xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                  className={`flex h-20 w-20 items-center justify-center rounded-full text-3xl font-bold transition-all md:h-24 md:w-24 md:text-4xl lg:h-28 lg:w-28 lg:text-5xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
                 >
                   {showFeedback && isCorrectAnswer ? op : op}
                 </motion.button>
-                <span className={`text-sm md:text-base ${labelClass}`}>
+                <span className={`text-base md:text-lg ${labelClass}`}>
                   {index === 0 ? '大于' : index === 1 ? '小于' : '等于'}
                 </span>
               </div>
@@ -189,7 +189,7 @@ export function QuestionCard({
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
-        className={`relative shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${getTypeColor()} p-5 shadow-2xl md:p-6 lg:p-10`}
+        className={`relative shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${getTypeColor()} p-6 shadow-2xl md:p-8 lg:p-12`}
       >
         {/* 装饰性背景圆 */}
         <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/20 md:h-32 md:w-32 lg:h-40 lg:w-40" />
@@ -204,7 +204,7 @@ export function QuestionCard({
         </div>
 
         {/* 题目内容 */}
-        <div className="relative flex min-h-[100px] items-center justify-center md:min-h-[120px] lg:min-h-[150px]">
+        <div className="relative flex min-h-[120px] items-center justify-center md:min-h-[140px] lg:min-h-[180px]">
           {question.type === 'comparison'
             ? renderComparisonQuestion()
             : renderCalculationQuestion()}
