@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* iPad landscape detection fix - force tablet layout */
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* iPad portrait */
+@media only screen and (min-width: 768px) and (orientation: portrait) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* iOS Safari 渐变渲染修复 */
 .bg-gradient-to-br {
   background-color: transparent;
