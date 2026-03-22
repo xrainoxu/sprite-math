@@ -1,17 +1,71 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { StatsPanel } from '../components/StatsPanel';
 import { getStats } from '../utils/storage';
 import { Icon } from '../components/Icon';
 
+const languages = [
+  { code: 'zh-CN', label: '中文', flag: '🇨🇳' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+];
+
 export function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const stats = getStats();
+  const [showLangMenu, setShowLangMenu] = useState(false);
+
+  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
+
+  const changeLanguage = (code: string) => {
+    i18n.changeLanguage(code);
+    setShowLangMenu(false);
+  };
 
   return (
     <div className="mx-auto max-w-4xl p-4">
+      {/* 语言切换下拉菜单 */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="absolute top-4 right-4 z-50"
+      >
+        <button
+          onClick={() => setShowLangMenu(!showLangMenu)}
+          className="flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-200"
+        >
+          <span>{currentLang.flag}</span>
+          <span>{currentLang.label}</span>
+          <Icon icon="mdi:chevron-down" className="text-base" />
+        </button>
+        <AnimatePresence>
+          {showLangMenu && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute right-0 mt-2 w-32 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black/5"
+            >
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang.code)}
+                  className={`flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-indigo-50 ${
+                    lang.code === i18n.language
+                      ? 'bg-indigo-50 font-medium text-indigo-600'
+                      : 'text-gray-700'
+                  }`}
+                >
+                  <span>{lang.flag}</span>
+                  <span>{lang.label}</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
       {/* 标题 */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
