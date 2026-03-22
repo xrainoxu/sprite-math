@@ -17,6 +17,7 @@ html, body {
   width: 100%;
   overflow: hidden;
   /* 卡通浅色渐变背景 - 明亮温暖奶白色调 */
+  background-color: #FFFBF0;
   background: linear-gradient(180deg, #FFF8E7 0%, #FFFBF0 50%, #FFF5E6 100%);
 }
 

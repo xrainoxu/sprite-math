@@ -11,10 +11,10 @@ export function ProgressBar({ value, max, color = 'blue', showLabel = true }: Pr
   const percentage = Math.min((value / max) * 100, 100);
 
   const colorClasses = {
-    green: 'bg-gradient-to-r from-green-400 to-emerald-500',
-    blue: 'bg-gradient-to-r from-blue-400 to-indigo-500',
-    purple: 'bg-gradient-to-r from-purple-400 to-pink-500',
-    red: 'bg-gradient-to-r from-red-400 to-orange-500',
+    green: { gradient: 'bg-gradient-to-r from-green-400 to-emerald-500', fallback: '#4ade80' },
+    blue: { gradient: 'bg-gradient-to-r from-blue-400 to-indigo-500', fallback: '#60a5fa' },
+    purple: { gradient: 'bg-gradient-to-r from-purple-400 to-pink-500', fallback: '#c084fc' },
+    red: { gradient: 'bg-gradient-to-r from-red-400 to-orange-500', fallback: '#f87171' },
   };
 
   return (
@@ -32,7 +32,8 @@ export function ProgressBar({ value, max, color = 'blue', showLabel = true }: Pr
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className={`h-full rounded-full ${colorClasses[color]}`}
+          className={`h-full rounded-full ${colorClasses[color].gradient}`}
+          style={{ backgroundColor: colorClasses[color].fallback }}
         />
       </div>
     </div>

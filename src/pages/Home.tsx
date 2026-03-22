@@ -41,6 +41,7 @@ export function Home() {
           title="计时挑战"
           description="60秒内完成尽可能多的题目"
           color="from-amber-300 to-orange-400"
+          fallbackBg="#fcd34d"
           onClick={() => navigate('/timed')}
         />
 
@@ -50,6 +51,7 @@ export function Home() {
           title="闯关模式"
           description="答对积累能量，答错扣血"
           color="from-violet-300 to-fuchsia-400"
+          fallbackBg="#c4b5fd"
           onClick={() => navigate('/challenge')}
         />
 
@@ -59,6 +61,7 @@ export function Home() {
           title="自由练习"
           description="选择题型，无压力练习"
           color="from-emerald-300 to-teal-400"
+          fallbackBg="#6ee7b7"
           onClick={() => navigate('/practice')}
         />
       </motion.div>
@@ -81,16 +84,18 @@ interface ModeCardProps {
   title: string;
   description: string;
   color: string;
+  fallbackBg: string;
   onClick: () => void;
 }
 
-function ModeCard({ icon, title, description, color, onClick }: ModeCardProps) {
+function ModeCard({ icon, title, description, color, fallbackBg, onClick }: ModeCardProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.03, y: -5 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${color} p-8 text-left shadow-xl transition-all hover:shadow-2xl`}
+      style={{ backgroundColor: fallbackBg }}
     >
       {/* 装饰性背景 */}
       <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/20" />

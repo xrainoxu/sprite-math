@@ -60,14 +60,17 @@ export function GameHeader({
   const themeClasses = {
     rose: {
       bg: 'from-rose-100 to-pink-100',
+      fallbackBg: '#fce7f3',
       exitBtn: 'bg-rose-400 hover:bg-rose-500',
     },
     violet: {
       bg: 'from-violet-100 to-purple-100',
+      fallbackBg: '#ede9fe',
       exitBtn: 'bg-violet-400 hover:bg-violet-500',
     },
     orange: {
       bg: 'from-amber-100 to-orange-100',
+      fallbackBg: '#fef3c7',
       exitBtn: 'bg-orange-400 hover:bg-orange-500',
     },
   };
@@ -128,6 +131,7 @@ export function GameHeader({
   return (
     <div
       className={`flex shrink-0 items-center justify-between rounded-b-xl bg-gradient-to-r ${themeStyle.bg} px-2 py-2 shadow-md md:px-3`}
+      style={{ backgroundColor: themeStyle.fallbackBg }}
     >
       {/* 左侧：自定义内容或默认的关卡/计时器 */}
       <div className="flex shrink-0 items-center gap-1.5 md:gap-2">

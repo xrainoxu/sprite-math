@@ -74,6 +74,7 @@ export function PracticeMode() {
                   ? 'border-amber-400 bg-gradient-to-r from-amber-400 to-orange-400 text-white'
                   : 'border-amber-300 bg-white text-amber-800 hover:bg-amber-50'
               }`}
+              style={selectedTypes.includes(option.type) ? { backgroundColor: '#fbbf24' } : undefined}
             >
               <span className="mr-2">{option.icon}</span>
               {option.label}
@@ -87,6 +88,7 @@ export function PracticeMode() {
             whileTap={{ scale: 0.95 }}
             onClick={startPractice}
             className="rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-12 py-4 text-xl font-bold text-white shadow-xl transition-all hover:from-amber-500 hover:to-orange-500 md:px-16 md:py-6 md:text-2xl"
+            style={{ backgroundColor: '#fbbf24' }}
           >
             开始练习
           </motion.button>

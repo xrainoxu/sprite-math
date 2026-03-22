@@ -65,6 +65,7 @@ export function TimedMode() {
                   ? 'border-amber-400 bg-gradient-to-r from-amber-400 to-orange-400 text-white'
                   : 'border-amber-300 bg-white text-amber-800 hover:bg-amber-50'
               }`}
+              style={selectedDuration === option.seconds ? { backgroundColor: '#fbbf24' } : undefined}
             >
               {option.label}
             </motion.button>
@@ -82,6 +83,7 @@ export function TimedMode() {
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
           className="rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:from-amber-500 hover:to-orange-500"
+          style={{ backgroundColor: '#fbbf24' }}
         >
           开始挑战
         </motion.button>

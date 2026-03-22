@@ -21,24 +21,28 @@ export function StatsPanel({ stats }: StatsPanelProps) {
         label="最高分"
         value={stats.highestScore.toString()}
         color="from-amber-300 to-orange-400"
+        fallbackBg="#fcd34d"
       />
       <StatCard
         icon="mdi:fire"
         label="最长连击"
         value={stats.longestStreak.toString()}
         color="from-rose-300 to-pink-400"
+        fallbackBg="#fda4af"
       />
       <StatCard
         icon="mdi:chart-line"
         label="今日正确率"
         value={todayAccuracy > 0 ? `${todayAccuracy}%` : '-'}
         color="from-emerald-300 to-teal-400"
+        fallbackBg="#6ee7b7"
       />
       <StatCard
         icon="mdi:pencil"
         label="总答题数"
         value={stats.totalAnswered.toString()}
         color="from-sky-300 to-indigo-400"
+        fallbackBg="#7dd3fc"
       />
     </motion.div>
   );
@@ -49,12 +53,14 @@ interface StatCardProps {
   label: string;
   value: string;
   color: string;
+  fallbackBg: string;
 }
 
-function StatCard({ icon, label, value, color }: StatCardProps) {
+function StatCard({ icon, label, value, color, fallbackBg }: StatCardProps) {
   return (
     <div
       className={`rounded-2xl bg-gradient-to-br ${color} p-4 shadow-lg`}
+      style={{ backgroundColor: fallbackBg }}
     >
       <div className="flex items-center gap-2">
         <Icon icon={icon} className="text-2xl text-white" />

@@ -32,6 +32,7 @@ export function GameProgressBar({
             animate={{ width: `${percentage}%` }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="absolute inset-y-0 left-0 rounded-lg bg-gradient-to-r from-violet-400 to-purple-500"
+            style={{ backgroundColor: '#8b5cf6' }}
           />
         )}
 

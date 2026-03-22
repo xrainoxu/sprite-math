@@ -30,6 +30,7 @@ export function GameOver({
   const themeStyles = {
     rose: {
       bg: 'from-amber-50 via-orange-50 to-amber-100',
+      fallbackBg: '#fff7ed',
       cardBg: 'bg-white',
       text: 'text-amber-700',
       labelText: 'text-amber-500',
@@ -38,6 +39,7 @@ export function GameOver({
     },
     violet: {
       bg: 'from-amber-50 via-orange-50 to-amber-100',
+      fallbackBg: '#fff7ed',
       cardBg: 'bg-white',
       text: 'text-amber-700',
       labelText: 'text-amber-500',
@@ -46,6 +48,7 @@ export function GameOver({
     },
     orange: {
       bg: 'from-amber-50 via-orange-50 to-amber-100',
+      fallbackBg: '#fff7ed',
       cardBg: 'bg-white',
       text: 'text-amber-700',
       labelText: 'text-amber-500',
@@ -57,7 +60,7 @@ export function GameOver({
   const style = themeStyles[theme];
 
   return (
-    <div className={`flex h-screen flex-col items-center justify-center bg-gradient-to-br ${style.bg} p-2 md:p-4`}>
+    <div className={`flex h-screen flex-col items-center justify-center bg-gradient-to-br ${style.bg} p-2 md:p-4`} style={{ backgroundColor: style.fallbackBg }}>
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

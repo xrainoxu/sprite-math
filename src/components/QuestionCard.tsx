@@ -31,6 +31,19 @@ export function QuestionCard({
     }
   };
 
+  const getFallbackBg = () => {
+    switch (question.type) {
+      case 'addition':
+        return '#6ee7b7';
+      case 'subtraction':
+        return '#7dd3fc';
+      case 'comparison':
+        return '#c4b5fd';
+      default:
+        return '#cbd5e1';
+    }
+  };
+
   const getTypeIcon = () => {
     switch (question.type) {
       case 'addition':
@@ -85,7 +98,7 @@ export function QuestionCard({
           {answerOptions.map((num) => {
             const isSelected = selectedAnswer === String(num);
             const isCorrectAnswer = question.answer === String(num);
-            let btnClass = 'bg-white/30 hover:bg-white/50 text-white ring-2 ring-white/30';
+            let btnClass = 'text-white ring-2 ring-white/50';
 
             if (showFeedback) {
               if (isCorrectAnswer) {
@@ -97,6 +110,10 @@ export function QuestionCard({
               btnClass = 'bg-white text-purple-600 ring-4 ring-purple-300';
             }
 
+            const btnStyle: React.CSSProperties = showFeedback || isSelected
+              ? {}
+              : { backgroundColor: 'rgba(255, 255, 255, 0.3)' };
+
             return (
               <motion.button
                 key={num}
@@ -106,6 +123,7 @@ export function QuestionCard({
                 onClick={() => !showFeedback && handleNumberSelect(num)}
                 disabled={showFeedback}
                 className={`flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold shadow-md transition-all md:h-14 md:w-14 md:text-xl lg:h-16 lg:w-16 lg:text-2xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                style={btnStyle}
               >
                 {num}
               </motion.button>
@@ -136,7 +154,10 @@ export function QuestionCard({
           </motion.span>
 
           {/* 圆圈占位符 */}
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-white/50 md:h-20 md:w-20 lg:h-24 lg:w-24" />
+          <div
+            className="flex h-12 w-12 items-center justify-center rounded-full border-4 md:h-20 md:w-20 lg:h-24 lg:w-24"
+            style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }}
+          />
 
           {/* 右边表达式 */}
           <motion.span
@@ -154,7 +175,7 @@ export function QuestionCard({
           {['>', '<', '='].map((op, index) => {
             const isSelected = selectedAnswer === op;
             const isCorrectAnswer = question.answer === op;
-            let btnClass = 'bg-white/30 hover:bg-white/50 text-white ring-2 ring-white/30';
+            let btnClass = 'text-white ring-2 ring-white/50';
             let labelClass = 'text-white/80';
 
             if (showFeedback) {
@@ -170,6 +191,10 @@ export function QuestionCard({
               labelClass = 'text-white font-bold';
             }
 
+            const btnStyle: React.CSSProperties = showFeedback || isSelected
+              ? {}
+              : { backgroundColor: 'rgba(255, 255, 255, 0.3)' };
+
             return (
               <div key={op} className="flex flex-col items-center gap-1 md:gap-3">
                 <motion.button
@@ -178,6 +203,7 @@ export function QuestionCard({
                   onClick={() => !showFeedback && onSelectAnswer?.(op)}
                   disabled={showFeedback}
                   className={`flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold transition-all md:h-24 md:w-24 md:text-4xl lg:h-28 lg:w-28 lg:text-5xl ${btnClass} ${showFeedback ? 'cursor-default' : 'cursor-pointer'}`}
+                  style={btnStyle}
                 >
                   {showFeedback && isCorrectAnswer ? op : op}
                 </motion.button>
@@ -199,6 +225,7 @@ export function QuestionCard({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
         className={`relative shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${getTypeColor()} p-6 shadow-2xl md:p-8 lg:p-12`}
+        style={{ backgroundColor: getFallbackBg() }}
       >
         {/* 装饰性背景圆 */}
         <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/20 md:h-32 md:w-32 lg:h-40 lg:w-40" />

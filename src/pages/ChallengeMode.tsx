@@ -53,6 +53,7 @@ export function ChallengeMode() {
           whileTap={{ scale: 0.95 }}
           onClick={startGame}
           className="rounded-full bg-gradient-to-r from-amber-400 to-orange-400 px-12 py-4 text-xl font-bold text-white shadow-lg transition-all hover:from-amber-500 hover:to-orange-500"
+          style={{ backgroundColor: '#fbbf24' }}
         >
           开始闯关
         </motion.button>

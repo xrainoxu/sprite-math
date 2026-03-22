@@ -71,6 +71,7 @@ export function NumberPicker({
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSelect(num)}
                   className="flex h-12 items-center justify-center rounded-xl bg-gradient-to-b from-violet-400 to-purple-500 text-lg font-bold text-white shadow-md md:h-14 md:text-xl"
+                  style={{ backgroundColor: '#a78bfa' }}
                 >
                   {num}
                 </motion.button>
