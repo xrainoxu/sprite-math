@@ -163,7 +163,7 @@ export function ChallengePlay() {
       />
 
       {/* 中间区域 - 题目和答题区，不滚动 */}
-      <div className="flex flex-1 flex-col justify-center overflow-hidden px-2 md:px-6">
+      <div className="flex flex-1 flex-col justify-center overflow-hidden px-2 py-2 md:px-6 md:py-4">
         <AnimatePresence mode="wait">
           {question && (
             <div key={question.id} className="flex flex-col gap-3 md:gap-4 h-full">
