@@ -144,7 +144,7 @@ export function ChallengePlay() {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex h-[100dvh] flex-col overflow-hidden">
       {/* 顶部栏 */}
       <GameHeader
         onExit={() => navigate('/challenge')}
@@ -164,7 +164,7 @@ export function ChallengePlay() {
       <div className="flex flex-1 flex-col justify-center overflow-hidden px-2 md:px-6">
         <AnimatePresence mode="wait">
           {question && (
-            <div key={question.id} className="flex flex-col gap-3 md:gap-4">
+            <div key={question.id} className="flex flex-col gap-3 md:gap-4 h-full">
               <QuestionCard
                 question={question}
                 showFeedback={feedback.show}
